@@ -1,0 +1,888 @@
+{
+  "sections": [
+    {
+      "id": "breakfast",
+      "name": "Breakfast & Pastry",
+      "subtitle": "Our selected menu's to start your day",
+      "sortOrder": 2,
+      "categories": [
+        {
+          "id": "breakfast-menu",
+          "name": "Breakfast Menu",
+          "sortOrder": 1,
+          "items": [
+            {
+              "id": "chicken-creamy-rosemary-with-croissant",
+              "name": "Chicken Creamy Rosemary with Croissant",
+              "price": 36000,
+              "descriptionId": "ayam yang dimasak dengan rosemary dan saus rempah yang creamy disajikan\nbersama croissant.",
+              "descriptionEn": "chicken cooked with rosemary and a creamy spice sauce served with a\ncroissant.",
+              "image": "/images/1767457639368-499850005.png",
+              "sortOrder": 1,
+              "isAvailable": false
+            },
+            {
+              "id": "caesar-salad",
+              "name": "Caesar Salad",
+              "price": 28000,
+              "descriptionId": "campuran lettuce, selada romaine, salada, tomat ceri, smoked beef dan telur\nrebus disajikan dengan dressing caesar, parmesan dan crouton",
+              "descriptionEn": "a mixture of romaine, lettuce, salada, baby tomatoes, smoked beef and boiled\n eggs with caesar dressings, parmesan and crouton",
+              "image": "/images/1767457670305-240445817.png",
+              "sortOrder": 2,
+              "isAvailable": false
+            },
+            {
+              "id": "french-toast",
+              "name": "French Toast",
+              "price": 20000,
+              "descriptionId": "roti panggang ala Perancis dengan topping krim vanilla dan bubuk coklat\n",
+              "descriptionEn": "a toast in french style topped with vanilla cream and cocoa powder",
+              "image": "/images/1767457748803-229635957.png",
+              "sortOrder": 3,
+              "isAvailable": true
+            },
+            {
+              "id": "ice-cream-waffle",
+              "name": "Ice Cream Waffle",
+              "price": 22000,
+              "descriptionId": "wafel yang disajikan dengan es krim vanilla, irisan buah strawberry dan sirup mapel",
+              "descriptionEn": "a waffle served with vanilla ice cream, sliced strawberry and maple syrup",
+              "image": "/images/1767457718803-10100037.png",
+              "sortOrder": 4,
+              "isAvailable": true
+            },
+            {
+              "id": "butter-croissant",
+              "name": "Butter Croissant",
+              "price": 19000,
+              "descriptionId": "",
+              "descriptionEn": "",
+              "image": "/images/1767457809279-404241845.png",
+              "sortOrder": 5,
+              "isAvailable": true
+            },
+            {
+              "id": "almond-croissant",
+              "name": "Almond Croissant",
+              "price": 33000,
+              "descriptionId": "",
+              "descriptionEn": "",
+              "image": "/images/1767457830323-771778774.png",
+              "isAvailable": true,
+              "sortOrder": 6
+            },
+            {
+              "id": "cinnamon",
+              "name": "Cinnamon",
+              "price": 22000,
+              "descriptionId": "",
+              "descriptionEn": "",
+              "image": "/images/1767457910776-944038389.png",
+              "isAvailable": true,
+              "sortOrder": 7
+            },
+            {
+              "id": "smoked-beef-croissant",
+              "name": "Smoked Beef Croissant",
+              "price": 24000,
+              "descriptionId": "",
+              "descriptionEn": "",
+              "image": "/images/1767457846275-774463104.png",
+              "sortOrder": 8,
+              "isAvailable": true
+            },
+            {
+              "id": "sweet-martabak",
+              "name": "Sweet Martabak",
+              "price": 24000,
+              "descriptionId": "",
+              "descriptionEn": "",
+              "image": "/images/1767457897103-796824906.png",
+              "sortOrder": 9,
+              "isAvailable": true
+            }
+          ]
+        }
+      ],
+      "cardBg": "#803932",
+      "headerImage": "",
+      "priceTagBg": "#6c3a34",
+      "itemCardBg": "#F4F0E7",
+      "itemCardText": "#000000"
+    },
+    {
+      "id": "food",
+      "name": "Food",
+      "subtitle": "Hearty dishes of Main Course, Kids Meal, Pasta, & Snacks",
+      "sortOrder": 3,
+      "categories": [
+        {
+          "id": "main-course",
+          "name": "Main Course",
+          "sortOrder": 1,
+          "items": [
+            {
+              "id": "mi-goreng",
+              "name": "Mi Goreng",
+              "price": 24000,
+              "descriptionId": "mi goreng kecap dengan isian ayam, telur orak arik dan sayuran disajikan bersama taburan bawang goreng, acar dan kerupuk.",
+              "descriptionEn": "Indonesian fried noodles cooked with chicken, scrambled eggs and vegetables served with a sprinkle of fried shallot, pickles and crackers.",
+              "image": "/images/1767457988609-40667914.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "sop-buntut",
+              "name": "Sop Buntut",
+              "price": 53000,
+              "descriptionId": "sup kaldu bening berisi buntut sapi, wortel, kentang dan tomat disajikan bersama nasi, emping dan sambal.",
+              "descriptionEn": "a clear broth oxtail soup served with rice, gnemon seed crackers and sambal.",
+              "image": "/images/1767458026115-13364312.png",
+              "isAvailable": false,
+              "sortOrder": 1
+            },
+            {
+              "id": "beef-butter-rice",
+              "name": "Beef Butter Rice",
+              "price": 34000,
+              "descriptionId": "nasi yang dimasak dengan butter disajikan bersama irisan smoked brisket beef\nbumbu blackpepper dan telur orak-arik.",
+              "descriptionEn": "rice cooked in butter served with blackpepper smoked brisket beef slice and\nscrambled egg.",
+              "image": "/images/1767458056342-641011915.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "nasi-goreng-kampung",
+              "name": "Nasi Goreng Kampung",
+              "price": 26000,
+              "descriptionId": "nasi goreng dengan bumbu khas, ayam dan sayuran disajikan bersama telur mata\nsapi, acar dan kerupuk.\n",
+              "descriptionEn": "Indonesian fried rice cooked with special spices, chicken and vegetables served with\nsunny side up eggs, pickles and crackers.",
+              "image": "/images/1767458079670-58142145.png",
+              "isAvailable": false,
+              "sortOrder": 1
+            },
+            {
+              "id": "nasi-garang-asem",
+              "name": "Nasi Garang Asem",
+              "price": 33000,
+              "descriptionId": "olahan ayam bersantan yang dimasak dengan daun pisang ini punya cita rasa pedas,\ngurih dan asam disajikan bersama nasi dan emping.",
+              "descriptionEn": "a coconut milk chicken dish cooked in banana leaves has a spicy, savory and sour\ntaste served with rice and gnemon seed crackers.",
+              "image": "/images/1767458134669-587039857.png",
+              "isAvailable": false,
+              "sortOrder": 1
+            },
+            {
+              "id": "chicken-creamy-mushroom",
+              "name": "Chicken Creamy Mushroom",
+              "price": 33000,
+              "descriptionId": "pan seared ﬁllet paha ayam yang disajikan dengan saus jamur, brokoli, kentang\ngoreng crinkle cut.",
+              "descriptionEn": "pan seared chicken thigh ﬁllet served with mushroom sauce, broccoli and crinkle cut\nfries.",
+              "image": "/images/1767458161023-228808121.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "nasi-goreng-cabe-hijau",
+              "name": "Nasi Goreng Cabe Hijau",
+              "price": 26000,
+              "descriptionId": "nasi goreng dengan bumbu cabai hijau, ayam dan sayuran disajikan bersama telur\nmata sapi, acar dan kerupuk.\n",
+              "descriptionEn": "Indonesian fried rice cooked with green chilies spices, chicken and vegetables\nserved with sunny side up eggs, pickles and crackers.",
+              "image": "/images/1767458190935-991372623.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "nasi-sop-merah",
+              "name": "Nasi Sop Merah",
+              "price": 24000,
+              "descriptionId": "nasi putih yang disajikan bersama sop merah dengan isian wortel, ayam dan sosis.\n",
+              "descriptionEn": "Indonesian tomato (red) soup ﬁlled with carrots, chicken and sausage served with\nsteamed rice.",
+              "image": "/images/1767458216535-248950717.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "tenderloin-steak",
+              "name": "Tenderloin Steak",
+              "price": 77000,
+              "descriptionId": "bagian daging sapi yang lembut dipanggang dan disajikan dengan saus mushroom/black pepper, mashed potato, dan simple salad.\n",
+              "descriptionEn": "tender beef cutlet grilled and served with mushroom/black pepper sauce, mashed\npotatoes, and simple salad.",
+              "image": "/images/1767458240164-930489322.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "nasi-goreng-kecombrang",
+              "name": "Nasi Goreng Kecombrang",
+              "price": 33000,
+              "descriptionId": "nasi goreng dengan bumbu kecombrang dan sayuran disajikan bersama sate ayam\nberbumbu, telur mata sapi, acar dan kerupuk.\n",
+              "descriptionEn": "Indonesian fried rice cooked with torch ginger spices and vegetables served with\nchicken skewer, sunny side up eggs, pickles and crackers.",
+              "image": "/images/1767458263687-777820478.png",
+              "isAvailable": false,
+              "sortOrder": 1
+            },
+            {
+              "id": "curry-katsu-rice",
+              "name": "Curry Katsu Rice",
+              "price": 33000,
+              "descriptionId": "nasi yang disajikan bersama kari khas jepang, ayam goreng tepung panko dan\ntaburan nori ﬂakes.\n",
+              "descriptionEn": "a Japanese curry served with breaded fried chicken and steamed rice with a nori\nﬂakes on top.",
+              "image": "/images/1767458286618-214582100.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "chicken-cordon-bleu",
+              "name": "Chicken Cordon Bleu",
+              "price": 36000,
+              "descriptionId": "ayam ﬁllet gulung isi smoked beef dan keju disajikan dengan saus gravy, brokoli dan\nkentang.\n",
+              "descriptionEn": "rolled chicken ﬁllet ﬁlled with smoked beef and cheese served with gravy, broccoli\nand potatoes.",
+              "image": "/images/1767458306935-66972956.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            }
+          ]
+        },
+        {
+          "id": "kids-meal",
+          "name": "Kids Meal",
+          "sortOrder": 2,
+          "items": [
+            {
+              "id": "rabbit",
+              "name": "Rabbit",
+              "price": 27000,
+              "descriptionId": "paket makan anak berisi nasi sop merah, buah-buahan dan susu kotak.",
+              "descriptionEn": "kids meal package containing sop merah with rice, fruits and milk.",
+              "image": "/images/1767458371422-14767306.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "bear",
+              "name": "Bear",
+              "price": 27000,
+              "descriptionId": "paket makan anak berisi fettucine carbonara, buah-buahan dan susu kotak.\n ",
+              "descriptionEn": "kids meal package containing fettucine carbonara, fruits and milk.",
+              "image": "/images/1767458395935-455401945.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "giraffe",
+              "name": "Giraffe",
+              "price": 27000,
+              "descriptionId": "paket makan anak berisi curry katsu rice, buah-buahan dan susu kotak.",
+              "descriptionEn": "kids meal package containing curry katsu rice, fruits and milk.",
+              "image": "/images/1767458431191-268304491.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            }
+          ]
+        },
+        {
+          "id": "pasta",
+          "name": "Pasta",
+          "sortOrder": 3,
+          "items": [
+            {
+              "id": "pasta-bayam",
+              "name": "Pasta Bayam",
+              "price": 28000,
+              "descriptionId": "pasta penne yang dimasak dengan saus creamy dan bayam disajikan dengan taburan\nparsley, irisan baguette dan parmesan.\n",
+              "descriptionEn": "penne pasta cooked with creamy sauce and spinach served with a sprinkle of\nparsley, sliced baguette and parmesan.",
+              "image": "/images/1767458455646-594870288.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "fettuccine-carbonara",
+              "name": "Fettuccine Carbonara",
+              "price": 28000,
+              "descriptionId": "pasta fettucini dengan saus creamy, jamur champignon, dan smoked beef disajikan\ndengan taburan parsley, irisan baguette dan parmesan.\n",
+              "descriptionEn": "fettuccine pasta with creamy sauce, champignon mushrooms and smoked beef\nserved with a sprinkle of parsley, sliced baguette and parmesan.",
+              "image": "/images/1767458477208-752703203.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "spaghetti-bolognese",
+              "name": "Spaghetti Bolognese",
+              "price": 28000,
+              "descriptionId": "spaghetti yang dimasak dengan saus berbahan dasar daging ala Italia disajikan\ndengan taburan parsley dan irisan baguette.\n",
+              "descriptionEn": "spaghetti pasta cooked with bolognese sauce served with a sprinkle of parsley and\nsliced baguette.",
+              "image": "/images/1767458503317-584173537.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "spaghetti-aglio-olio-tuna",
+              "name": "Spaghetti Aglio Olio Tuna",
+              "price": 28000,
+              "descriptionId": "spaghetti yang dimasak dengan bawang putih, cabai dan tuna disajikan bersama\ntaburan parsley dan irisan baguette\n",
+              "descriptionEn": "spaghetti pasta cooked with garlic, chili pepper and tuna served with a sprinkle of\nparsley and sliced baguette.",
+              "image": "/images/1767458524917-252190600.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            }
+          ]
+        },
+        {
+          "id": "snack",
+          "name": "Snack",
+          "sortOrder": 4,
+          "items": [
+            {
+              "id": "banana-ubee-frites",
+              "name": "Banana Ubee Frites",
+              "price": 20000,
+              "descriptionId": "pisang goreng wijen dan ubi madu goreng disajikan dengan saus karamel\n",
+              "descriptionEn": "fried banana and fried sweet potato served with caramel sauce.",
+              "image": "/images/1767458552843-552983802.png",
+              "isAvailable": false,
+              "sortOrder": 1
+            },
+            {
+              "id": "french-fries",
+              "name": "French Fries",
+              "price": 18000,
+              "descriptionId": "kentang goreng dengan bumbu spesial, taburan parsley dan saus sambal.\n",
+              "descriptionEn": "special seasoned shoestring fries with sprinkle of parsley and chili sauce.",
+              "image": "/images/1767458576429-822309032.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "marshmallow-soft-cookies",
+              "name": "Marshmallow Soft Cookies",
+              "price": 17000,
+              "descriptionId": "kukis bertekstur lembut dengan marshmallow diatasnya.\n",
+              "descriptionEn": "soft textured cookies with marshmallows on top.",
+              "image": "/images/1767458605634-953541358.png",
+              "isAvailable": false,
+              "sortOrder": 1
+            },
+            {
+              "id": "cinnamon-donut",
+              "name": "Cinnamon Donut",
+              "price": 12000,
+              "descriptionId": "donat kentang bertabur bubuk gula kayu manis.\n",
+              "descriptionEn": "fried donuts topped with cinnamon sugar powder.",
+              "image": "/images/1767458633158-579242551.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "bitterbalen",
+              "name": "Bitterbalen",
+              "price": 19000,
+              "descriptionId": "kroket bulat mini tanpa kentang yang berisi smoked beef dan keju disajikan dengan\ntaburan parsley dan saus sambal.\n",
+              "descriptionEn": "deep fried dutch meatballs ﬁlled with smoked beef and cheese, served with sprinkle\nof parsley and chili sauce.",
+              "image": "/images/1767458671255-835181559.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "matcha-cookie-bomb",
+              "name": "Matcha Cookie Bomb",
+              "price": 20000,
+              "descriptionId": "soft cookie isi saus matcha dengan topping es krim.\n",
+              "descriptionEn": "soft cookies ﬁlled with matcha sauce and ice cream topping.",
+              "image": "/images/1767458704451-454080011.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "calamari",
+              "name": "Calamari",
+              "price": 22000,
+              "descriptionId": "cumi goreng tepung berbentuk cincin yang disajikan dengan taburan parsley dan\nsaus sambal.\n",
+              "descriptionEn": "calamari fritters served with a sprinkle of parsley and chili sauce.",
+              "image": "/images/1767458727306-459893683.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "crispy-platter",
+              "name": "Crispy Platter",
+              "price": 30000,
+              "descriptionId": "paket snack berisi crispy enoki, ekado, dan ebi furai disajikan bersama saus sambal.\n",
+              "descriptionEn": "a platter that contained crispy enoki, money bag fried dumplings and ebi furai served\nwith chili sauce.",
+              "image": "/images/1767458755017-105975044.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "blueberry-crumble-cheesecake",
+              "name": "Blueberry Crumble Cheesecake",
+              "price": 28000,
+              "descriptionId": "cheesecake dengan campuran blueberry dan crumble yang renyah.\n",
+              "descriptionEn": "cheesecake with a crispy mix of blueberries and crumble.",
+              "image": "/images/1767458786971-619695060.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "potato-wedges",
+              "name": "Potato Wedges",
+              "price": 18000,
+              "descriptionId": "kentang goreng tebal dengan taburan parsley disajikan bersama saus sambal.\n",
+              "descriptionEn": "deep fried potato wedges served with a sprinkle of parsley and chili sauce.",
+              "image": "/images/1767458808525-297756885.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "cinnamon-cruller",
+              "name": "Cinnamon Cruller",
+              "price": 19000,
+              "descriptionId": "pastry sejenis choux yang digoreng, ditabur gula kayu manis, dan disajikan dengan saus\ncoklat.",
+              "descriptionEn": "a fried choux pastry, sprinkled with cinnamon sugar, and served with chocolate sauce.",
+              "image": "/images/1767458831133-907454280.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            }
+          ]
+        }
+      ],
+      "cardBg": "#803932",
+      "headerImage": "",
+      "priceTagBg": "#647767",
+      "itemCardBg": "#F4F0E7",
+      "itemCardText": "#000000"
+    },
+    {
+      "id": "beverage",
+      "name": "Beverage",
+      "subtitle": "From bold brews to gentle refreshers",
+      "sortOrder": 4,
+      "categories": [
+        {
+          "id": "signature-coffee",
+          "name": "Signature Coffee",
+          "sortOrder": 1,
+          "items": [
+            {
+              "id": "fruity-bomb-",
+              "name": "Fruity Bomb ",
+              "price": 22000,
+              "descriptionId": "longblack cold brew espresso dengan rasa\nbuah mangga dan peach.\n",
+              "descriptionEn": "a long black cold brew espresso with mango\nand peach ﬂavor.",
+              "image": "/images/1767458901070-986281703.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "senja--",
+              "name": "Senja +",
+              "price": 20000,
+              "descriptionId": "es kopi susu gula aren signature dari Kedai\nLatar 1.0",
+              "descriptionEn": "signature iced coffee with milk and palm sugar from Kedai Latar 1.0",
+              "image": "/images/1767458926341-865168051.png",
+              "isAvailable": false,
+              "sortOrder": 1
+            },
+            {
+              "id": "siang--",
+              "name": "Siang +",
+              "price": 22000,
+              "descriptionId": "es kopi susu ice cream blend signature dari\nKedai Latar 1.0",
+              "descriptionEn": "signature iced coffee with milk and ice cream\nblend from Kedai Latar 1.0",
+              "image": "/images/1767458951899-446296731.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "tiramisu",
+              "name": "Tiramisu",
+              "price": 22000,
+              "descriptionId": "es kopi susu dengan perpaduan dark\nchocolate dan fresh espresso.\n",
+              "descriptionEn": "iced coffee milk with a blend of dark\nchocolate and fresh espresso.",
+              "image": "/images/1767459028767-60008004.png",
+              "isAvailable": false,
+              "sortOrder": 1
+            },
+            {
+              "id": "butterscotch-creamy-latte",
+              "name": "Butterscotch Creamy Latte",
+              "price": 22000,
+              "descriptionId": "es kopi susu rasa manis gurih caramel butterscotch dengan topping cream dan remah biskuit.\n",
+              "descriptionEn": "iced milk coffee with sweet and savory caramel butterscotch ﬂavor with cream and biscuit crumbs. ",
+              "image": "/images/1767459058135-889763072.png",
+              "isAvailable": false,
+              "sortOrder": 1
+            },
+            {
+              "id": "not-so-dirty-latte",
+              "name": "Not So Dirty Latte",
+              "price": 24000,
+              "descriptionId": "es kopi susu dengan fresh espresso dan\ntopping cream.\n",
+              "descriptionEn": "iced coffee milk with fresh espresso and\ncream topping.",
+              "image": "/images/1767459078792-391249005.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            }
+          ]
+        },
+        {
+          "id": "classic-coffee",
+          "name": "Classic Coffee",
+          "sortOrder": 2,
+          "items": [
+            {
+              "id": "espresso--hot-",
+              "name": "Espresso (hot)",
+              "price": 22000,
+              "descriptionId": "shot kecil berwarna gelap dengan lapisan crema tipis di atasnya, aromanya kuat dan rasanya intens.",
+              "descriptionEn": "a small, dark shot topped with a thin layer of crema, offering a strong aroma and intense flavor.",
+              "image": "",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "americano--ice-hot-",
+              "name": "Americano (ice/hot)",
+              "price": 22000,
+              "descriptionId": "espresso yang diseduh dengan air, menghasilkan rasa kopi yang ringan namun tetap berkarakter.",
+              "descriptionEn": "espresso diluted with hot water, creating a lighter body while keeping its distinct coffee character.",
+              "image": "/images/1767459199369-849497124.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "cappuccino--ice-hot-",
+              "name": "Cappuccino (ice/hot)",
+              "price": 22000,
+              "descriptionId": "espresso dengan susu dan foam lembut yang tebal di atasnya.",
+              "descriptionEn": "espresso with steamed milk and a thick, soft layer of foam.",
+              "image": "/images/1767459221329-123626308.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "latte--ice-hot-",
+              "name": "Latte (ice/hot)",
+              "price": 22000,
+              "descriptionId": "espresso dengan susu yang lebih dominan, teksturnya halus dan rasanya lembut.",
+              "descriptionEn": "espresso combined with more steamed milk, smooth in texture and gentle in flavor.",
+              "image": "",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "magic--hot-",
+              "name": "Magic (hot)",
+              "price": 22000,
+              "descriptionId": "perpaduan double ristretto dan susu steamed yang menghasilkan rasa kopi intens dengan tekstur lembut.",
+              "descriptionEn": "a blend of double ristretto and steamed milk, delivering an intense coffee flavor with a smooth texture.",
+              "image": "",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "manual-brew",
+              "name": "Manual Brew",
+              "price": 25000,
+              "customPrice": "Start from 25K",
+              "descriptionId": "Seduhan kopi manual metode pour over yang menghadirkan rasa kopi  lebih bersih dan ringan.",
+              "descriptionEn": "manual coffee brewing using the pour over method which produces a cleaner and lighter coffee taste.\n\nserved in V60 / Japanese Style\n*Ask the barista for the beans line up ;)",
+              "image": "",
+              "isAvailable": true,
+              "sortOrder": 1
+            }
+          ]
+        },
+        {
+          "id": "mocktail",
+          "name": "Mocktail",
+          "sortOrder": 3,
+          "items": [
+            {
+              "id": "majestic-rose",
+              "name": "Majestic Rose",
+              "price": 22000,
+              "descriptionId": "minuman bersoda rasa earl grey, lemon dan\nbunga mawar.\n",
+              "descriptionEn": "a ﬁzzy mocktail with earl grey, lemon and\nrose ﬂavors.",
+              "image": "/images/1767459366064-657455615.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "orange-blast",
+              "name": "Orange Blast",
+              "price": 20000,
+              "descriptionId": "minuman segar dengan campuran rasa jeruk,\napel dan bunga sakura.\n",
+              "descriptionEn": "non-soda mocktail with a mixture of orange,\napple and cherry blossom ﬂavors.",
+              "image": "/images/1767459385255-335057006.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "purple-haze",
+              "name": "Purple Haze",
+              "price": 22000,
+              "descriptionId": "minuman segar dengan campuran rasa \nanggur, lemon dan bunga lavender.\n",
+              "descriptionEn": "non-soda mocktail with a mixture of grape,\nlemon and lavender ﬂavors.",
+              "image": "/images/1767459409423-315885267.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "nastar",
+              "name": "Nastar",
+              "price": 22000,
+              "descriptionId": "minuman segar dengan sensasi rasa kukis\nnastar.\n",
+              "descriptionEn": "a refreshing drink with the sensation of nastar cookie taste.",
+              "image": "/images/1767459428581-851756081.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "kopyor",
+              "name": "Kopyor",
+              "price": 22000,
+              "descriptionId": "minuman segar dengan sensasi rasa es kopyor dengan es krim.\n",
+              "descriptionEn": "a refreshing drink with the sensation of the taste of kopyor (coconut drink) with ice cream.",
+              "image": "/images/1767459452963-415899024.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "sourcandy",
+              "name": "Sourcandy",
+              "price": 24000,
+              "descriptionId": "Minuman bersoda dengan rasa permen \nasam manis.\n",
+              "descriptionEn": "a ﬁzzy mocktail with a sweet and sour\ncandy ﬂavor.",
+              "image": "/images/1767459478555-204565467.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            }
+          ]
+        },
+        {
+          "id": "milkshake",
+          "name": "Milkshake",
+          "sortOrder": 4,
+          "items": [
+            {
+              "id": "chocolate-milkshake",
+              "name": "Chocolate Milkshake",
+              "price": 20000,
+              "descriptionId": "",
+              "descriptionEn": "",
+              "image": "/images/1767459499925-687958471.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "strawberry-milkshake",
+              "name": "Strawberry Milkshake",
+              "price": 20000,
+              "descriptionId": "",
+              "descriptionEn": "",
+              "image": "/images/1767459521665-19162343.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "vanilla-milkshake",
+              "name": "Vanilla Milkshake",
+              "price": 21000,
+              "descriptionId": "",
+              "descriptionEn": "",
+              "image": "/images/1767459533639-474452477.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            }
+          ]
+        },
+        {
+          "id": "tea",
+          "name": "Tea",
+          "sortOrder": 5,
+          "items": [
+            {
+              "id": "peach-tea",
+              "name": "Peach Tea",
+              "price": 20000,
+              "descriptionId": "",
+              "descriptionEn": "",
+              "image": "/images/1767459549429-552762501.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "strawberry-tea",
+              "name": "Strawberry Tea",
+              "price": 20000,
+              "descriptionId": "",
+              "descriptionEn": "",
+              "image": "/images/1767459561591-518294625.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "peppermint-tea",
+              "name": "Peppermint Tea",
+              "price": 21000,
+              "descriptionId": "",
+              "descriptionEn": "",
+              "image": "/images/1767459573147-60702685.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "lychee-tea",
+              "name": "Lychee Tea",
+              "price": 22000,
+              "descriptionId": "",
+              "descriptionEn": "",
+              "image": "",
+              "isAvailable": true,
+              "sortOrder": 1
+            }
+          ]
+        },
+        {
+          "id": "creamy-series",
+          "name": "Creamy Series",
+          "sortOrder": 6,
+          "items": [
+            {
+              "id": "strawberry-cheesecake",
+              "name": "Strawberry Cheesecake",
+              "price": 22000,
+              "descriptionId": "minuman susu dengan sensasi rasa kue\nstrawberry cheesecake.",
+              "descriptionEn": "a milk-based drink that gives a sensation\nof the taste of strawberry cheesecake.",
+              "image": "/images/1767459612786-462263225.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "cookies---cream",
+              "name": "Cookies & Cream",
+              "price": 20000,
+              "descriptionId": "minuman rasa biskuit dan krim dengan\ntopping remah biskuit diatasnya.\n",
+              "descriptionEn": "A ﬂavored cookies and cream drinks\ntopped with cookies crumble.",
+              "image": "/images/1767459634067-950714176.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "tsukiji-matcha-creamy",
+              "name": "Tsukiji Matcha Creamy",
+              "price": 22000,
+              "descriptionId": "minuman rasa matcha dengan topping\ncheese cream\n",
+              "descriptionEn": "a matcha drink with cheese cream on top.",
+              "image": "/images/1767459660719-848514361.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "matcha-latte",
+              "name": "Matcha Latte",
+              "price": 22000,
+              "descriptionId": "",
+              "descriptionEn": "",
+              "image": "/images/1767459736612-50998110.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "creamy-pistachio",
+              "name": "Creamy Pistachio",
+              "price": 22000,
+              "descriptionId": "minuman susu rasa pistachio dengan\ncheese cream.\n",
+              "descriptionEn": "a pistachio ﬂavored milk-based drink\ntopped with cheese cream.",
+              "image": "/images/1767459758268-106160976.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "sweet-cloudy",
+              "name": "Sweet Cloudy",
+              "price": 24000,
+              "descriptionId": "minuman susu rasa nougat vanilla dengan\ncream dan marshmallow diatasnya.\n",
+              "descriptionEn": "A vanilla nougat ﬂavored milk-based drink\ntopped with cream and marshmallow.",
+              "image": "/images/1767459779301-580777706.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "terang-bulan",
+              "name": "Terang Bulan",
+              "price": 22000,
+              "descriptionId": "minuman susu yang memberikan sensasi\nrasa jajanan terang bulan (martabak manis).",
+              "descriptionEn": "a milk-based drink that gives a sensation\nof the taste of sweet martabak.",
+              "image": "/images/1767459799908-210443703.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "matcha-frappe",
+              "name": "Matcha Frappe",
+              "price": 24000,
+              "descriptionId": "Minuman yang terbuat dari matcha dan\nsusu.",
+              "descriptionEn": "A drink made from matcha and milk.",
+              "image": "/images/1767459821267-659881000.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            }
+          ]
+        },
+        {
+          "id": "smoothies",
+          "name": "Smoothies",
+          "sortOrder": 7,
+          "items": [
+            {
+              "id": "beauty-berries",
+              "name": "Beauty Berries",
+              "price": 23000,
+              "descriptionId": "campuran buah beri, pisang, yoghurt, es\nkrim, susu dan stevia.\n",
+              "descriptionEn": "mix berries, banana, yoghurt, ice cream\nand milk with stevia sweetener.",
+              "image": "/images/1767459841393-932482535.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "yellow-sunshine",
+              "name": "Yellow Sunshine",
+              "price": 25000,
+              "descriptionId": "campuran dari buah markisa, mangga, yoghurt, es krim, susu dan stevia.\n",
+              "descriptionEn": "passion fruit, mango, yoghurt, ice cream\nand milk with stevia sweetener.",
+              "image": "/images/1767459866453-841370531.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "tropical-twist",
+              "name": "Tropical Twist",
+              "price": 25000,
+              "descriptionId": "campuran dari buah peach, nanas,\nyoghurt, es krim, susu dan stevia.\n",
+              "descriptionEn": "peach, pineapple, yoghurt, ice cream and\nmilk with stevia sweetener.",
+              "image": "/images/1767459887602-597163752.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            },
+            {
+              "id": "summertime",
+              "name": "Summertime",
+              "price": 25000,
+              "descriptionId": "campuran buah beri, buah naga, yoghurt,\nleci, es krim, susu dan stevia.\n",
+              "descriptionEn": "mix berries, dragon fruit, yoghurt, lychee,\nice cream and milk with stevia sweetener.",
+              "image": "/images/1767459905889-160021830.png",
+              "isAvailable": true,
+              "sortOrder": 1
+            }
+          ]
+        }
+      ],
+      "cardBg": "#803932",
+      "headerImage": "",
+      "priceTagBg": "#363635",
+      "itemCardBg": "#ED473F",
+      "itemCardText": "#FFFFFF"
+    }
+  ]
+}
