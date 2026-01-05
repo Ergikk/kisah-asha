@@ -19,7 +19,7 @@
               "descriptionEn": "chicken cooked with rosemary and a creamy spice sauce served with a\ncroissant.",
               "image": "/images/1767457639368-499850005.png",
               "sortOrder": 1,
-              "isAvailable": true
+              "isAvailable": false
             },
             {
               "id": "caesar-salad",
@@ -29,7 +29,7 @@
               "descriptionEn": "a mixture of romaine, lettuce, salada, baby tomatoes, smoked beef and boiled\n eggs with caesar dressings, parmesan and crouton",
               "image": "/images/1767457670305-240445817.png",
               "sortOrder": 2,
-              "isAvailable": true
+              "isAvailable": false
             },
             {
               "id": "french-toast",
@@ -138,7 +138,7 @@
               "descriptionId": "sup kaldu bening berisi buntut sapi, wortel, kentang dan tomat disajikan bersama nasi, emping dan sambal.",
               "descriptionEn": "a clear broth oxtail soup served with rice, gnemon seed crackers and sambal.",
               "image": "/images/1767458026115-13364312.png",
-              "isAvailable": true,
+              "isAvailable": false,
               "sortOrder": 1
             },
             {
@@ -158,7 +158,7 @@
               "descriptionId": "nasi goreng dengan bumbu khas, ayam dan sayuran disajikan bersama telur mata\nsapi, acar dan kerupuk.\n",
               "descriptionEn": "Indonesian fried rice cooked with special spices, chicken and vegetables served with\nsunny side up eggs, pickles and crackers.",
               "image": "/images/1767458079670-58142145.png",
-              "isAvailable": true,
+              "isAvailable": false,
               "sortOrder": 1
             },
             {
@@ -168,7 +168,7 @@
               "descriptionId": "olahan ayam bersantan yang dimasak dengan daun pisang ini punya cita rasa pedas,\ngurih dan asam disajikan bersama nasi dan emping.",
               "descriptionEn": "a coconut milk chicken dish cooked in banana leaves has a spicy, savory and sour\ntaste served with rice and gnemon seed crackers.",
               "image": "/images/1767458134669-587039857.png",
-              "isAvailable": true,
+              "isAvailable": false,
               "sortOrder": 1
             },
             {
@@ -218,7 +218,7 @@
               "descriptionId": "nasi goreng dengan bumbu kecombrang dan sayuran disajikan bersama sate ayam\nberbumbu, telur mata sapi, acar dan kerupuk.\n",
               "descriptionEn": "Indonesian fried rice cooked with torch ginger spices and vegetables served with\nchicken skewer, sunny side up eggs, pickles and crackers.",
               "image": "/images/1767458263687-777820478.png",
-              "isAvailable": true,
+              "isAvailable": false,
               "sortOrder": 1
             },
             {
@@ -339,7 +339,7 @@
               "descriptionId": "pisang goreng wijen dan ubi madu goreng disajikan dengan saus karamel\n",
               "descriptionEn": "fried banana and fried sweet potato served with caramel sauce.",
               "image": "/images/1767458552843-552983802.png",
-              "isAvailable": true,
+              "isAvailable": false,
               "sortOrder": 1
             },
             {
@@ -359,7 +359,7 @@
               "descriptionId": "kukis bertekstur lembut dengan marshmallow diatasnya.\n",
               "descriptionEn": "soft textured cookies with marshmallows on top.",
               "image": "/images/1767458605634-953541358.png",
-              "isAvailable": true,
+              "isAvailable": false,
               "sortOrder": 1
             },
             {
@@ -485,7 +485,7 @@
               "descriptionId": "es kopi susu gula aren signature dari Kedai\nLatar 1.0",
               "descriptionEn": "signature iced coffee with milk and palm sugar from Kedai Latar 1.0",
               "image": "/images/1767458926341-865168051.png",
-              "isAvailable": true,
+              "isAvailable": false,
               "sortOrder": 1
             },
             {
@@ -505,7 +505,7 @@
               "descriptionId": "es kopi susu dengan perpaduan dark\nchocolate dan fresh espresso.\n",
               "descriptionEn": "iced coffee milk with a blend of dark\nchocolate and fresh espresso.",
               "image": "/images/1767459028767-60008004.png",
-              "isAvailable": true,
+              "isAvailable": false,
               "sortOrder": 1
             },
             {
@@ -515,7 +515,7 @@
               "descriptionId": "es kopi susu rasa manis gurih caramel butterscotch dengan topping cream dan remah biskuit.\n",
               "descriptionEn": "iced milk coffee with sweet and savory caramel butterscotch ﬂavor with cream and biscuit crumbs. ",
               "image": "/images/1767459058135-889763072.png",
-              "isAvailable": true,
+              "isAvailable": false,
               "sortOrder": 1
             },
             {

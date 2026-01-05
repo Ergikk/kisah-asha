@@ -1,26 +1,27 @@
 import express from 'express'
 import cors from 'cors'
 import fs from 'fs'
-import path from 'path'
+import os from 'os'
+import { join, dirname, extname } from 'path'
 import { fileURLToPath } from 'url'
 import multer from 'multer'
 
 const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+const __dirname = dirname(__filename)
 
 const app = express()
 const PORT = 4001
-const DATA_PATH = path.join(__dirname, 'data', 'menu.json')
+const DATA_PATH = join(os.tmpdir(), 'menu.json');
 
-// Create data folder if missing
-if (!fs.existsSync(path.dirname(DATA_PATH))) {
-  fs.mkdirSync(path.dirname(DATA_PATH), { recursive: true })
+// Ensure /tmp exists (it usually does in serverless environments)
+if (!fs.existsSync('/tmp')) {
+  fs.mkdirSync('/tmp', { recursive: true })
 }
 
 // Multer storage for images
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const uploadDir = path.join(__dirname, 'public', 'images')
+    const uploadDir = join(__dirname, 'public', 'images')
     if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true })
     cb(null, uploadDir)
   },
@@ -29,7 +30,7 @@ const storage = multer.diskStorage({
       Date.now() +
       '-' +
       Math.round(Math.random() * 1e9) +
-      path.extname(file.originalname)
+      extname(file.originalname)
     cb(null, uniqueName)
   },
 })
@@ -37,13 +38,23 @@ const upload = multer({ storage })
 
 app.use(cors())
 app.use(express.json())
-app.use('/images', express.static(path.join(__dirname, 'public', 'images')))
+app.use('/images', express.static(join(__dirname, 'public', 'images')))
 
 function readData() {
   if (!fs.existsSync(DATA_PATH)) {
-    const defaultData = { sections: [] }
-    fs.writeFileSync(DATA_PATH, JSON.stringify(defaultData, null, 2))
-    return defaultData
+    // Seed from original data if available
+    const originalPath = join(__dirname, 'data', 'menu.json')
+    let initialData = { sections: [] }
+    if (fs.existsSync(originalPath)) {
+      try {
+        const raw = fs.readFileSync(originalPath, 'utf8')
+        initialData = JSON.parse(raw)
+      } catch (e) {
+        console.error('Error reading original data:', e)
+      }
+    }
+    fs.writeFileSync(DATA_PATH, JSON.stringify(initialData, null, 2))
+    return initialData
   }
   const raw = fs.readFileSync(DATA_PATH, 'utf8')
   return JSON.parse(raw)
