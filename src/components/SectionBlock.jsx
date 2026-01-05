@@ -54,7 +54,7 @@ export default function SectionBlock({ section }) {
         <div
           className="relative h-40"
           style={{
-            backgroundImage: `url(${style.headerImage.startsWith('/images/') ? `http://localhost:4001${style.headerImage}` : style.headerImage})`,
+            backgroundImage: `url(${style.headerImage})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundColor: style.cardBg,
@@ -181,7 +181,7 @@ export default function SectionBlock({ section }) {
         <Modal onClose={() => setOpenItem(null)}>
           <div className="absolute inset-0 h-full w-full">
             {openItem.image ? (
-              <img src={`http://localhost:4001${openItem.image}`} alt={openItem.name} className={`h-full w-full object-cover ${openItem.isAvailable === false ? 'grayscale' : ''}`} />
+              <img src={openItem.image} alt={openItem.name} className={`h-full w-full object-cover ${openItem.isAvailable === false ? 'grayscale' : ''}`} />
             ) : (
               <div className="h-full w-full bg-gradient-to-br from-gray-300/50 to-gray-400/50 flex items-center justify-center">
                 <span className="text-4xl">📸</span>
