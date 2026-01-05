@@ -1,5 +1,4 @@
-const API_URL = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
-const BASE_URL = API_URL || ''
+const API_URL = 'http://localhost:4001'
 
 export async function getMenu() {
   const res = await fetch(`${API_URL}/api/menu`)

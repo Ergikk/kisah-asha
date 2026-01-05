@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ReactDOM from 'react-dom'
 import { getMenu, saveItem, deleteItem, addSection, updateSection, deleteSection, addCategory, toggleItemAvailability } from '../api/client.js'
-const API_URL = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
 
 export default function Admin() {
   const navigate = useNavigate()
@@ -42,10 +41,9 @@ export default function Admin() {
   }, [])
 
   const uploadImage = async (file) => {
-    const BASE_URL = API_URL || ''
     const formData = new FormData()
     formData.append('image', file)
-    const res = await fetch(`${BASE_URL}/api/upload`, { method: 'POST', body: formData })
+    const res = await fetch('http://localhost:4001/api/upload', { method: 'POST', body: formData })
     const data = await res.json()
     return data.image
   }
@@ -88,7 +86,7 @@ export default function Admin() {
       image: item.image || '',
       sortOrder: String(item.sortOrder || '')
     })
-    setImagePreview(item.image ? `${API_URL}${item.image}` : null)
+    setImagePreview(item.image ? `http://localhost:4001${item.image}` : null)
     setCurrentAction('edit')
     setShowAddItemModal(true)
   }
@@ -187,7 +185,7 @@ const handleEditSection = (section) => {
     categoryInactiveText: section.categoryInactiveText || '#000000',
     sortOrder: section.sortOrder || ''
   })
-  setSectionImagePreview(section.headerImage ? `${API_URL}${section.headerImage}` : null)
+  setSectionImagePreview(section.headerImage ? `http://localhost:4001${section.headerImage}` : null)
 }
 
 const handleUpdateSection = async (e) => {
@@ -361,7 +359,7 @@ const handleDeleteSection = async (sectionId) => {
                   <div key={`${section.id}-${category.id}-${item.id}-${item.isAvailable}`} className="flex items-center justify-between p-4 bg-white/10 rounded-xl border border-white/20 hover:bg-white/20 transition-all">
                     <div className="flex items-center space-x-4 flex-1 min-w-0">
                       {item.image ? (
-                        <img src={`${API_URL}${item.image}`} alt={item.name} className="w-16 h-16 rounded-lg object-cover border border-white/50 flex-shrink-0" />
+                        <img src={`http://localhost:4001${item.image}`} alt={item.name} className="w-16 h-16 rounded-lg object-cover border border-white/50 flex-shrink-0" />
                       ) : (
                         <div className="w-16 h-16 bg-gray-500/50 rounded-lg flex items-center justify-center text-xs text-white/80 flex-shrink-0">No img</div>
                       )}
@@ -446,7 +444,7 @@ const handleDeleteSection = async (sectionId) => {
                     <div key={item.id} className="flex items-center justify-between p-3 md:p-4 bg-white/20 rounded-lg hover:bg-white/30 transition-all">
                       <div className="flex items-center space-x-3 flex-1 min-w-0">
                         {item.image ? (
-                          <img src={`${API_URL}${item.image}`} alt={item.name} className="w-12 h-12 md:w-16 md:h-16 rounded-lg object-cover border border-white/50 flex-shrink-0" />
+                          <img src={`http://localhost:4001${item.image}`} alt={item.name} className="w-12 h-12 md:w-16 md:h-16 rounded-lg object-cover border border-white/50 flex-shrink-0" />
                         ) : (
                           <div className="w-12 h-12 md:w-16 md:h-16 bg-gray-500/50 rounded-lg flex items-center justify-center text-xs text-white/80 flex-shrink-0">No img</div>
                         )}
@@ -537,7 +535,7 @@ const handleDeleteSection = async (sectionId) => {
                 </div>
                 {form.image && !imageFile && (
                   <div className="mt-2 text-xs opacity-75 text-white/80">
-                    Current: <a href={form.image} target="_blank" className="underline hover:text-blue-400">View</a>
+                    Current: <a href={`http://localhost:4001${form.image}`} target="_blank" className="underline hover:text-blue-400">View</a>
                   </div>
                 )}
               </div>
@@ -624,8 +622,8 @@ const handleDeleteSection = async (sectionId) => {
 
       {/* Manage Section Modal */}
       {showManageSectionModal && ReactDOM.createPortal(
-        <div className="fixed inset-0 z-50 bg-[#6f7f72] backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setShowManageSectionModal(false)}>
-          <div className="bg-gradient-to-br from-black/40 to-black/60 backdrop-blur-md p-6 rounded-3xl border-2 border-white/20 space-y-4 w-full max-w-2xl max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+        <div className="fixed inset-0 z-50 bg-[#6f7f72] backdrop-blur-sm flex items-center justify-center" onClick={() => setShowManageSectionModal(false)}>
+          <div className="bg-gradient-to-br from-black/40 to-black/60 backdrop-blur-md p-10 rounded-3xl border-2 border-white/20 space-y-4 w-full max-w-2xl max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
             <div className="flex justify-between items-center">
               <h3 className="font-bold text-xl text-white/95">Manage Sections</h3>
               <button
@@ -783,37 +781,37 @@ const handleDeleteSection = async (sectionId) => {
                   onClick={() => {
                     setEditingSection(null)
                     setSectionForm({ name: '', subtitle: '', cardBg: '', headerImage: '', priceTagBg: '', itemCardBg: '', itemCardText: '', headerText: '', subtitleText: '', categoryActiveBg: '', categoryActiveText: '', categoryInactiveBg: '', categoryInactiveText: '', sortOrder: '' })
+                    setSectionImageFile(null)
+                    setSectionImagePreview(null)
                   }}
-                  className="w-full bg-red-500/90 hover:bg-red-600 text-white font-bold py-3 rounded-xl mt-2"
+                  className="w-full bg-gray-500/80 hover:bg-gray-600 text-white py-3 rounded-xl"
                 >
-                  Cancel Edit
+                  Cancel
                 </button>
               )}
             </form>
 
-            {/* Existing Sections List */}
-            <div className="space-y-3">
-              <h4 className="font-semibold text-white/90">Existing Sections</h4>
-              {menu.sections.map(section => (
-                <div key={section.id} className="flex items-center justify-between p-3 bg-white/10 rounded-xl">
-                  <div>
-                    <div className="font-medium text-white">{section.name}</div>
-                    <div className="text-sm opacity-70 text-white/70">Sort: {section.sortOrder || 'N/A'}</div>
-                  </div>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => handleEditSection(section)}
-                      className="px-3 py-1 bg-blue-500/90 hover:bg-blue-600 text-white text-sm rounded-lg font-medium transition-all"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => handleDeleteSection(section.id)}
-                      className="px-3 py-1 bg-red-500/90 hover:bg-red-600 text-white text-sm rounded-lg font-medium transition-all"
-                    >
-                      Delete
-                    </button>
-                  </div>
+            {/* Section List */}
+            <div className="space-y-2 max-h-40 overflow-y-auto">
+              {getFilteredMenu().sections.map((section) => (
+                <div key={section.id} className="text-white flex items-center justify-between p-3 bg-white/10 rounded-xl">
+                  <span className="font-semibold text-sm">{section.name}</span>
+                  {adminLevel === 'main' && (
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => handleEditSection(section)}
+                        className="text-xs px-2 py-1 bg-blue-500/80 hover:bg-blue-600 text-white rounded-lg"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => handleDeleteSection(section.id)}
+                        className="text-xs px-2 py-1 bg-red-500/80 hover:bg-red-600 text-white rounded-lg"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

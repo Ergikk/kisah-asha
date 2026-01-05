@@ -4,7 +4,6 @@ import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import multer from 'multer'
-import { kv } from '@vercel/kv'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -12,7 +11,6 @@ const __dirname = path.dirname(__filename)
 const app = express()
 const PORT = 4001
 const DATA_PATH = path.join(__dirname, 'data', 'menu.json')
-const MENU_KEY = 'menu-data'
 
 // Create data folder if missing
 if (!fs.existsSync(path.dirname(DATA_PATH))) {
@@ -41,34 +39,18 @@ app.use(cors())
 app.use(express.json())
 app.use('/images', express.static(path.join(__dirname, 'public', 'images')))
 
-async function readData() {
-  try {
-    let data = await kv.get(MENU_KEY)
-    if (!data) {
-      // Initialize KV with file data if KV is empty
-      if (fs.existsSync(DATA_PATH)) {
-        const raw = fs.readFileSync(DATA_PATH, 'utf8')
-        data = JSON.parse(raw)
-        await kv.set(MENU_KEY, data)
-        console.log('Initialized KV with file data')
-      } else {
-        data = { sections: [] }
-      }
-    }
-    return data
-  } catch (error) {
-    console.error('Error reading data:', error)
-    return { sections: [] }
+function readData() {
+  if (!fs.existsSync(DATA_PATH)) {
+    const defaultData = { sections: [] }
+    fs.writeFileSync(DATA_PATH, JSON.stringify(defaultData, null, 2))
+    return defaultData
   }
+  const raw = fs.readFileSync(DATA_PATH, 'utf8')
+  return JSON.parse(raw)
 }
 
-async function writeData(data) {
-  try {
-    await kv.set(MENU_KEY, data)
-  } catch (error) {
-    console.error('Error writing data:', error)
-    throw error
-  }
+function writeData(data) {
+  fs.writeFileSync(DATA_PATH, JSON.stringify(data, null, 2), 'utf8')
 }
 
 function normalizeSectionSortOrders(data) {
@@ -85,17 +67,12 @@ function normalizeItemSortOrders(category) {
   })
 }
 
-app.get('/api/menu', async (req, res) => {
-  try {
-    const data = await readData()
-    res.json(data)
-  } catch (error) {
-    console.error('Error in GET /api/menu:', error)
-    res.status(500).json({ error: 'Failed to fetch menu data' })
-  }
+app.get('/api/menu', (req, res) => {
+  const data = readData()
+  res.json(data)
 })
 
-app.post('/api/items', async (req, res) => {
+app.post('/api/items', (req, res) => {
   let { sectionId, categoryId, item: itemData } = req.body
   if (!sectionId || !categoryId || !itemData) {
     return res.status(400).json({ error: 'Missing required fields' })
@@ -115,7 +92,7 @@ app.post('/api/items', async (req, res) => {
 
   if (req.file) item.image = `/images/${req.file.filename}`
 
-  const data = await readData()
+  const data = readData()
 
   let section = data.sections.find((s) => s.id === sectionId)
   if (!section) {
@@ -182,9 +159,9 @@ app.post('/api/items', async (req, res) => {
   res.json(item)
 })
 
-app.delete('/api/items/:sectionId/:categoryId/:itemId', async (req, res) => {
+app.delete('/api/items/:sectionId/:categoryId/:itemId', (req, res) => {
   const { sectionId, categoryId, itemId } = req.params
-  const data = await readData()
+  const data = readData()
 
   const section = data.sections.find((s) => s.id === sectionId)
   if (!section) return res.status(404).json({ error: 'Section not found' })
@@ -194,7 +171,7 @@ app.delete('/api/items/:sectionId/:categoryId/:itemId', async (req, res) => {
 
   category.items = category.items.filter((i) => i.id !== itemId)
   normalizeItemSortOrders(category)
-  await writeData(data)
+  writeData(data)
   res.json({ success: true })
 })
 
@@ -204,13 +181,13 @@ app.post('/api/upload', upload.single('image'), (req, res) => {
 })
 
 // Sections routes
-app.post('/api/sections', async (req, res) => {
+app.post('/api/sections', (req, res) => {
   const section = req.body
   if (!section.id || !section.name) {
     return res.status(400).json({ error: 'Missing required fields: id, name' })
   }
 
-  const data = await readData()
+  const data = readData()
   const existingIndex = data.sections.findIndex(s => s.id === section.id)
   if (existingIndex >= 0) {
     return res.status(400).json({ error: 'Section with this id already exists' })
@@ -230,15 +207,15 @@ app.post('/api/sections', async (req, res) => {
     sortOrder: Number(newSortOrder),
     categories: section.categories || []
   })
-  await writeData(data)
+  writeData(data)
   res.json(section)
 })
 
-app.put('/api/sections/:sectionId', async (req, res) => {
+app.put('/api/sections/:sectionId', (req, res) => {
   const { sectionId } = req.params
   const updates = req.body
 
-  const data = await readData()
+  const data = readData()
   const sectionIndex = data.sections.findIndex(s => s.id === sectionId)
   if (sectionIndex === -1) {
     return res.status(404).json({ error: 'Section not found' })
@@ -277,14 +254,14 @@ app.put('/api/sections/:sectionId', async (req, res) => {
   // Normalize sortOrders to ensure they are sequential and unique
   normalizeSectionSortOrders(data)
 
-  await writeData(data)
+  writeData(data)
   res.json(data.sections[sectionIndex])
 })
 
-app.delete('/api/sections/:sectionId', async (req, res) => {
+app.delete('/api/sections/:sectionId', (req, res) => {
   const { sectionId } = req.params
 
-  const data = await readData()
+  const data = readData()
   const sectionIndex = data.sections.findIndex(s => s.id === sectionId)
   if (sectionIndex === -1) {
     return res.status(404).json({ error: 'Section not found' })
@@ -292,19 +269,19 @@ app.delete('/api/sections/:sectionId', async (req, res) => {
 
   data.sections.splice(sectionIndex, 1)
   normalizeSectionSortOrders(data)
-  await writeData(data)
+  writeData(data)
   res.json({ success: true })
 })
 
 // Categories routes
-app.post('/api/sections/:sectionId/categories', async (req, res) => {
+app.post('/api/sections/:sectionId/categories', (req, res) => {
   const { sectionId } = req.params
   const category = req.body
   if (!category.id || !category.name) {
     return res.status(400).json({ error: 'Missing required fields: id, name' })
   }
 
-  const data = await readData()
+  const data = readData()
   const section = data.sections.find(s => s.id === sectionId)
   if (!section) {
     return res.status(404).json({ error: 'Section not found' })
@@ -319,14 +296,14 @@ app.post('/api/sections/:sectionId/categories', async (req, res) => {
     ...category,
     items: category.items || []
   })
-  await writeData(data)
+  writeData(data)
   res.json(category)
 })
 
-app.delete('/api/sections/:sectionId/categories/:categoryId', async (req, res) => {
+app.delete('/api/sections/:sectionId/categories/:categoryId', (req, res) => {
   const { sectionId, categoryId } = req.params
 
-  const data = await readData()
+  const data = readData()
   const section = data.sections.find(s => s.id === sectionId)
   if (!section) {
     return res.status(404).json({ error: 'Section not found' })
@@ -338,15 +315,15 @@ app.delete('/api/sections/:sectionId/categories/:categoryId', async (req, res) =
   }
 
   section.categories.splice(categoryIndex, 1)
-  await writeData(data)
+  writeData(data)
   res.json({ success: true })
 })
 
 // Toggle item availability
-app.patch('/api/items/:sectionId/:categoryId/:itemId/toggle', async (req, res) => {
+app.patch('/api/items/:sectionId/:categoryId/:itemId/toggle', (req, res) => {
   const { sectionId, categoryId, itemId } = req.params
 
-  const data = await readData()
+  const data = readData()
   const section = data.sections.find(s => s.id === sectionId)
   if (!section) {
     return res.status(404).json({ error: 'Section not found' })
@@ -363,7 +340,7 @@ app.patch('/api/items/:sectionId/:categoryId/:itemId/toggle', async (req, res) =
   }
 
   item.isAvailable = !item.isAvailable
-  await writeData(data)
+  writeData(data)
   res.json(item)
 })
 
@@ -392,4 +369,6 @@ app.post('/api/admin/login', (req, res) => {
   res.json({ token, level })
 })
 
-module.exports = app
+app.listen(PORT, () => {
+  console.log(`Backend: http://localhost:${PORT}`)
+})
