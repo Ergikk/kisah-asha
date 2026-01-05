@@ -1,10 +1,25 @@
 import { kv } from '@vercel/kv'
+import fs from 'fs'
+import path from 'path'
 
 const MENU_KEY = 'menu-data'
+const DATA_PATH = path.join(process.cwd(), 'backend', 'data', 'menu.json')
 
 async function readData() {
   try {
-    return await kv.get(MENU_KEY) || { sections: [] }
+    let data = await kv.get(MENU_KEY)
+    if (!data) {
+      // Initialize KV with file data if KV is empty
+      if (fs.existsSync(DATA_PATH)) {
+        const raw = fs.readFileSync(DATA_PATH, 'utf8')
+        data = JSON.parse(raw)
+        await kv.set(MENU_KEY, data)
+        console.log('Initialized KV with file data')
+      } else {
+        data = { sections: [] }
+      }
+    }
+    return data
   } catch (error) {
     console.error('Error reading data:', error)
     return { sections: [] }
