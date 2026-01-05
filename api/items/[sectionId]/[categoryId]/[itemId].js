@@ -1,23 +1,39 @@
-import fs from 'fs'
-import path from 'path'
-import { fileURLToPath } from 'url'
+import { put, del } from '@vercel/blob'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-const DATA_PATH = path.join(__dirname, '..', '..', '..', '..', 'data', 'menu.json')
+const BLOB_URL = 'https://xckyxnhc311lyejo.public.blob.vercel-storage.com/menu-data-fEs3LaKmzCPLwGFilnXxwkOtQ1N9F4.json'
 
-function readData() {
-  if (!fs.existsSync(DATA_PATH)) {
-    const defaultData = { sections: [] }
-    fs.writeFileSync(DATA_PATH, JSON.stringify(defaultData, null, 2))
-    return defaultData
+async function readData() {
+  try {
+    const response = await fetch(BLOB_URL)
+    if (!response.ok) {
+      // If blob doesn't exist, return default data
+      return { sections: [] }
+    }
+    return await response.json()
+  } catch (error) {
+    console.error('Error reading data:', error)
+    return { sections: [] }
   }
-  const raw = fs.readFileSync(DATA_PATH, 'utf8')
-  return JSON.parse(raw)
 }
 
-function writeData(data) {
-  fs.writeFileSync(DATA_PATH, JSON.stringify(data, null, 2), 'utf8')
+async function writeData(data) {
+  try {
+    // First, try to delete existing blob
+    try {
+      await del(BLOB_URL)
+    } catch (e) {
+      // Blob might not exist, that's ok
+    }
+
+    // Upload new data
+    await put('menu-data.json', JSON.stringify(data, null, 2), {
+      access: 'public',
+      contentType: 'application/json'
+    })
+  } catch (error) {
+    console.error('Error writing data:', error)
+    throw error
+  }
 }
 
 function normalizeItemSortOrders(category) {

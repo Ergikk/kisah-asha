@@ -1,23 +1,39 @@
-import fs from 'fs'
-import path from 'path'
-import { fileURLToPath } from 'url'
+import { put, del } from '@vercel/blob'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-const DATA_PATH = path.join(__dirname, '..', '..', 'data', 'menu.json')
+const BLOB_URL = 'https://xckyxnhc311lyejo.public.blob.vercel-storage.com/menu-data-fEs3LaKmzCPLwGFilnXxwkOtQ1N9F4.json'
 
-function readData() {
-  if (!fs.existsSync(DATA_PATH)) {
-    const defaultData = { sections: [] }
-    fs.writeFileSync(DATA_PATH, JSON.stringify(defaultData, null, 2))
-    return defaultData
+async function readData() {
+  try {
+    const response = await fetch(BLOB_URL)
+    if (!response.ok) {
+      // If blob doesn't exist, return default data
+      return { sections: [] }
+    }
+    return await response.json()
+  } catch (error) {
+    console.error('Error reading data:', error)
+    return { sections: [] }
   }
-  const raw = fs.readFileSync(DATA_PATH, 'utf8')
-  return JSON.parse(raw)
 }
 
-function writeData(data) {
-  fs.writeFileSync(DATA_PATH, JSON.stringify(data, null, 2), 'utf8')
+async function writeData(data) {
+  try {
+    // First, try to delete existing blob
+    try {
+      await del(BLOB_URL)
+    } catch (e) {
+      // Blob might not exist, that's ok
+    }
+
+    // Upload new data
+    await put('menu-data.json', JSON.stringify(data, null, 2), {
+      access: 'public',
+      contentType: 'application/json'
+    })
+  } catch (error) {
+    console.error('Error writing data:', error)
+    throw error
+  }
 }
 
 function normalizeSectionSortOrders(data) {
@@ -27,64 +43,74 @@ function normalizeSectionSortOrders(data) {
   })
 }
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   const { sectionId } = req.query
 
   if (req.method === 'PUT') {
-    const updates = req.body
+    try {
+      const updates = req.body
 
-    const data = readData()
-    const sectionIndex = data.sections.findIndex(s => s.id === sectionId)
-    if (sectionIndex === -1) {
-      return res.status(404).json({ error: 'Section not found' })
-    }
-
-    const currentSection = data.sections[sectionIndex]
-    const oldPos = Number(currentSection.sortOrder)
-    const newPos = Number(updates.sortOrder)
-
-    // Shift other sections based on the move direction
-    if (!isNaN(newPos) && newPos !== oldPos) {
-      if (newPos < oldPos) {
-        // Moving up: shift sections between newPos and oldPos-1 up by 1
-        data.sections.forEach((s, idx) => {
-          if (idx !== sectionIndex && Number(s.sortOrder) >= newPos && Number(s.sortOrder) < oldPos) {
-            s.sortOrder = Number(s.sortOrder) + 1
-          }
-        })
-      } else if (newPos > oldPos) {
-        // Moving down: shift sections between oldPos+1 and newPos down by 1
-        data.sections.forEach((s, idx) => {
-          if (idx !== sectionIndex && Number(s.sortOrder) > oldPos && Number(s.sortOrder) <= newPos) {
-            s.sortOrder = Number(s.sortOrder) - 1
-          }
-        })
+      const data = await readData()
+      const sectionIndex = data.sections.findIndex(s => s.id === sectionId)
+      if (sectionIndex === -1) {
+        return res.status(404).json({ error: 'Section not found' })
       }
+
+      const currentSection = data.sections[sectionIndex]
+      const oldPos = Number(currentSection.sortOrder)
+      const newPos = Number(updates.sortOrder)
+
+      // Shift other sections based on the move direction
+      if (!isNaN(newPos) && newPos !== oldPos) {
+        if (newPos < oldPos) {
+          // Moving up: shift sections between newPos and oldPos-1 up by 1
+          data.sections.forEach((s, idx) => {
+            if (idx !== sectionIndex && Number(s.sortOrder) >= newPos && Number(s.sortOrder) < oldPos) {
+              s.sortOrder = Number(s.sortOrder) + 1
+            }
+          })
+        } else if (newPos > oldPos) {
+          // Moving down: shift sections between oldPos+1 and newPos down by 1
+          data.sections.forEach((s, idx) => {
+            if (idx !== sectionIndex && Number(s.sortOrder) > oldPos && Number(s.sortOrder) <= newPos) {
+              s.sortOrder = Number(s.sortOrder) - 1
+            }
+          })
+        }
+      }
+
+      // Ensure sortOrder is stored as a number
+      const updatedSection = { ...data.sections[sectionIndex], ...updates }
+      if (updatedSection.sortOrder !== undefined) {
+        updatedSection.sortOrder = Number(updatedSection.sortOrder)
+      }
+      data.sections[sectionIndex] = updatedSection
+
+      // Normalize sortOrders to ensure they are sequential and unique
+      normalizeSectionSortOrders(data)
+
+      await writeData(data)
+      res.status(200).json(data.sections[sectionIndex])
+    } catch (error) {
+      console.error('Error in PUT /api/sections/[sectionId]:', error)
+      res.status(500).json({ error: 'Failed to update section' })
     }
-
-    // Ensure sortOrder is stored as a number
-    const updatedSection = { ...data.sections[sectionIndex], ...updates }
-    if (updatedSection.sortOrder !== undefined) {
-      updatedSection.sortOrder = Number(updatedSection.sortOrder)
-    }
-    data.sections[sectionIndex] = updatedSection
-
-    // Normalize sortOrders to ensure they are sequential and unique
-    normalizeSectionSortOrders(data)
-
-    writeData(data)
-    res.status(200).json(data.sections[sectionIndex])
   } else if (req.method === 'DELETE') {
-    const data = readData()
-    const sectionIndex = data.sections.findIndex(s => s.id === sectionId)
-    if (sectionIndex === -1) {
-      return res.status(404).json({ error: 'Section not found' })
-    }
+    try {
+      const data = await readData()
+      const sectionIndex = data.sections.findIndex(s => s.id === sectionId)
+      if (sectionIndex === -1) {
+        return res.status(404).json({ error: 'Section not found' })
+      }
 
-    data.sections.splice(sectionIndex, 1)
-    normalizeSectionSortOrders(data)
-    writeData(data)
-    res.status(200).json({ success: true })
+      data.sections.splice(sectionIndex, 1)
+      normalizeSectionSortOrders(data)
+      await writeData(data)
+      res.status(200).json({ success: true })
+    } catch (error) {
+      console.error('Error in DELETE /api/sections/[sectionId]:', error)
+      res.status(500).json({ error: 'Failed to delete section' })
+    }
   } else {
     res.setHeader('Allow', ['PUT', 'DELETE'])
     res.status(405).end(`Method ${req.method} Not Allowed`)
