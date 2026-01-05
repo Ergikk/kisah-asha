@@ -2,44 +2,22 @@ import { useState, useMemo } from 'react'
 import Modal from './Modal.jsx'
 import { RiArrowDownWideLine,RiArrowUpWideLine } from "react-icons/ri"
 
-const SECTION_STYLES = {
-  breakfast: {
-    cardBg: '#803932',
-    headerText: 'text-white',
-    subtitleText: 'text-white/80',
-    headerImage: '/images/breakfast-bg.png',
-    categoryActive: 'bg-[#ED473F] text-white',
-    categoryInactive: 'bg-orange-100 text-orange-900 hover:bg-orange-100',
-    priceTagBg: 'bg-[#6c3a34] text-white',
-    itemCardBg: 'bg-[#F4F0E7]',
-    itemCardText: 'text-black'
-  },
-  food: {
-    cardBg: '#F4F0E7',
-    headerText: 'text-black',
-    subtitleText: 'text-black/80',
-    headerImage: '/images/food-bg.png',
-    categoryActive: 'bg-[#647767] text-white',
-    categoryInactive: 'bg-orange-50 text-[#647767] hover:bg-orange-100',
-    priceTagBg: 'bg-[#647767] text-white',
-    itemCardBg: 'bg-[#F4F0E7]',
-    itemCardText: 'text-black'
-  },
-  beverage: {
-    cardBg: '#ED473F',
-    headerText: 'text-[#ED473F]',
-    subtitleText: 'text-[#ED473F]',
-    headerImage: '/images/beverage-bg.png',
-    categoryActive: 'bg[#ED473F] text-white',
-    categoryInactive: 'bg-[#F4F0E7] text-orange-900 hover:bg-orange-100',
-    priceTagBg: 'bg-[#ED473F] text-white',
-    itemCardBg: 'bg-[#F4F0E7]',
-    itemCardText: 'text-black'
-  },
-}
+
 
 function getSectionStyle(section) {
-  return SECTION_STYLES[section.id] || SECTION_STYLES.breakfast
+  return {
+    cardBg: section.cardBg || '#803932',
+    headerText: section.headerText || '#ffffff',
+    subtitleText: section.subtitleText || '#ffffff',
+    headerImage: section.headerImage || '/images/breakfast-bg.png',
+    categoryActiveBg: section.categoryActiveBg || '#ED473F',
+    categoryActiveText: section.categoryActiveText || '#ffffff',
+    categoryInactiveBg: section.categoryInactiveBg || '#F4F0E7',
+    categoryInactiveText: section.categoryInactiveText || '#000000',
+    priceTagBg: section.priceTagBg || '#6c3a34',
+    itemCardBg: section.itemCardBg || '#F4F0E7',
+    itemCardText: section.itemCardText || '#000000'
+  }
 }
 
 export default function SectionBlock({ section }) {
@@ -68,26 +46,28 @@ export default function SectionBlock({ section }) {
   return (
     <section className="rounded-3xl" style={{ backgroundColor: style.cardBg }}>
       {/* COLLAPSIBLE HEADER - Always visible */}
-      <div 
+      <div
         className="rounded-2xl overflow-hidden cursor-pointer hover:scale-[1.01] transition-all duration-200 clicked:scale-[1.01] transition-all duration-200"
         onClick={toggleSection}
+        style={{ backgroundColor: style.cardBg }}
       >
         <div
           className="relative h-40"
           style={{
-            backgroundImage: `url(${style.headerImage})`,
+            backgroundImage: `url(${style.headerImage.startsWith('/images/') ? `http://localhost:4001${style.headerImage}` : style.headerImage})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
+            backgroundColor: style.cardBg,
           }}
         >
           <div className="absolute inset-0" />
           <div className="absolute inset-0 flex items-center justify-center text-center px-4">
             <div>
-              <h2 className={`text-xl font-bold leading-tight ${style.headerText}`}>
+              <h2 className="text-xl font-bold leading-tight" style={{ color: style.headerText }}>
                 {section.name}
               </h2>
               {section.subtitle && (
-                <p className={`text-xs mt-1 ${style.subtitleText}`}>
+                <p className="text-xs mt-1" style={{ color: style.subtitleText }}>
                   {section.subtitle}
                 </p>
               )}
@@ -97,7 +77,7 @@ export default function SectionBlock({ section }) {
       </div>
 
       {/* COLLAPSIBLE CONTENT - Hidden by default */}
-      <div className={`overflow-hidden transition-all duration-500 ease-out ${isExpanded ? 'opacity-100' : 'max-h-0 opacity-0'}`}>
+      <div className={`overflow-hidden transition-all duration-500 ease-out ${isExpanded ? 'opacity-100' : 'max-h-0 opacity-0'}`} style={{ backgroundColor: style.cardBg }}>
         {/* Category tabs - Only when expanded */}
         <div className="space-y-2 mt-4 mb-4 px-5">
           {categories.map((cat) => {
@@ -107,10 +87,12 @@ export default function SectionBlock({ section }) {
                 key={cat.id}
                 onClick={() => setActiveCategoryId(cat.id)}
                 className={`w-full rounded-xl py-3 px-4 text-center font-semibold shadow-md transition-all duration-200 ${
-                  isActive
-                    ? `${style.categoryActive} shadow-xl scale-[1.02]`
-                    : `${style.categoryInactive} shadow-lg hover:shadow-xl`
+                  isActive ? 'shadow-xl scale-[1.02]' : 'shadow-lg hover:shadow-xl'
                 }`}
+                style={{
+                  backgroundColor: isActive ? style.categoryActiveBg : style.categoryInactiveBg,
+                  color: isActive ? style.categoryActiveText : style.categoryInactiveText
+                }}
               >
                 {cat.name}
               </button>
@@ -125,7 +107,8 @@ export default function SectionBlock({ section }) {
               <button
                 key={item.id}
                 onClick={() => setOpenItem(item)}
-                className={`group rounded-2xl ${style.itemCardBg} overflow-hidden transition-all duration-200 hover:scale-[1.02] shadow-md relative`}
+                className="group rounded-2xl overflow-hidden transition-all duration-200 hover:scale-[1.02] shadow-md relative"
+                style={{ backgroundColor: style.itemCardBg }}
               >
                 <div className="h-28 relative overflow-hidden">
                   {item.image ? (
@@ -140,13 +123,11 @@ export default function SectionBlock({ section }) {
                     </div>
                   )}
                 </div>
-                <div className={`absolute top-1/2 right-2 transform -translate-y-1/2 inline-flex items-center justify-center px-3 py-1 rounded-full text-xs font-bold ${
-                  item.isAvailable === false ? 'bg-[#803932] text-white' : style.priceTagBg
-                }`}>
+                <div className="absolute top-1/2 right-2 transform -translate-y-1/2 inline-flex items-center justify-center px-3 py-1 rounded-full text-xs font-bold" style={{ backgroundColor: item.isAvailable === false ? '#803932' : style.priceTagBg, color: item.isAvailable === false ? 'white' : 'white' }}>
                   {item.isAvailable === false ? 'SOLD OUT' : formatPrice(item)}
                 </div>
                 <div className="p-3 pt-2">
-                  <div className={`text-sm font-semibold leading-tight h-10 flex items-center justify-center ${style.itemCardText}`}>
+                  <div className="text-sm font-semibold leading-tight h-10 flex items-center justify-center" style={{ color: style.itemCardText }}>
                     {item.name}
                   </div>
                 </div>
@@ -207,9 +188,7 @@ export default function SectionBlock({ section }) {
               </div>
             )}
           </div>
-          <div className={`absolute top-6 left-4 inline-flex items-center justify-center px-4 py-2 rounded-xl text-sm font-bold shadow-lg ${
-            openItem.isAvailable ? style.priceTagBg : 'bg-[#803932] text-white'
-          }`}>
+          <div className="absolute top-6 left-4 inline-flex items-center justify-center px-4 py-2 rounded-xl text-sm font-bold shadow-lg" style={{ backgroundColor: openItem.isAvailable ? style.priceTagBg : '#803932', color: 'white' }}>
             {openItem.isAvailable ? (openItem.customPrice || `Rp ${openItem.price?.toLocaleString('id-ID') || '36.000'}`) : 'SOLD OUT'}
           </div>
           <h3 className="text-xl font-bold mb-3 leading-tight">{openItem.name}</h3>

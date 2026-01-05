@@ -16,10 +16,10 @@ export default function Admin() {
   const [editingItem, setEditingItem] = useState(null)  // NEW: Edit mode
   const [editingSection, setEditingSection] = useState(null)
   const [editingCategory, setEditingCategory] = useState(null)
-  const [sectionForm, setSectionForm] = useState({ name: '', subtitle: '', cardBg: '', headerImage: '', priceTagBg: '', itemCardBg: '', itemCardText: '', sortOrder: '' })
   const [sectionImageFile, setSectionImageFile] = useState(null)
   const [sectionImagePreview, setSectionImagePreview] = useState(null)
   const [categoryForm, setCategoryForm] = useState({ name: '' })
+  const [sectionForm, setSectionForm] = useState({ name: '', subtitle: '', cardBg: '', headerImage: '', priceTagBg: '', itemCardBg: '', itemCardText: '', headerText: '', subtitleText: '', categoryActiveBg: '', categoryActiveText: '', categoryInactiveBg: '', categoryInactiveText: '', sortOrder: '' })
   const [adminLevel, setAdminLevel] = useState(() => localStorage.getItem('asha_admin_level') || 'main')
   const [showAddItemModal, setShowAddItemModal] = useState(false)
   const [showManageSectionModal, setShowManageSectionModal] = useState(false)
@@ -143,6 +143,12 @@ const handleAddSection = async (e) => {
       priceTagBg: sectionForm.priceTagBg || '#6c3a34',
       itemCardBg: sectionForm.itemCardBg || '#F4F0E7',
       itemCardText: sectionForm.itemCardText || '#000000',
+      headerText: sectionForm.headerText || '#ffffff',
+      subtitleText: sectionForm.subtitleText || '#ffffff',
+      categoryActiveBg: sectionForm.categoryActiveBg || '#ED473F',
+      categoryActiveText: sectionForm.categoryActiveText || '#ffffff',
+      categoryInactiveBg: sectionForm.categoryInactiveBg || '#F4F0E7',
+      categoryInactiveText: sectionForm.categoryInactiveText || '#000000',
       sortOrder: Number(sectionForm.sortOrder) || undefined
     }
 
@@ -153,7 +159,7 @@ const handleAddSection = async (e) => {
     await addSection(finalSection)
     setMenu(await getMenu())
     alert('Section added!')
-    setSectionForm({ name: '', subtitle: '', cardBg: '', headerImage: '', priceTagBg: '', itemCardBg: '', itemCardText: '', sortOrder: '' })
+    setSectionForm({ name: '', subtitle: '', cardBg: '', headerImage: '', priceTagBg: '', itemCardBg: '', itemCardText: '', headerText: '', subtitleText: '', categoryActiveBg: '', categoryActiveText: '', categoryInactiveBg: '', categoryInactiveText: '', sortOrder: '' })
     setSectionImageFile(null)
     setSectionImagePreview(null)
   } catch (error) {
@@ -171,8 +177,15 @@ const handleEditSection = (section) => {
     priceTagBg: section.priceTagBg || '#6c3a34',
     itemCardBg: section.itemCardBg || '#F4F0E7',
     itemCardText: section.itemCardText || '#000000',
+    headerText: section.headerText || '#ffffff',
+    subtitleText: section.subtitleText || '#ffffff',
+    categoryActiveBg: section.categoryActiveBg || '#ED473F',
+    categoryActiveText: section.categoryActiveText || '#ffffff',
+    categoryInactiveBg: section.categoryInactiveBg || '#F4F0E7',
+    categoryInactiveText: section.categoryInactiveText || '#000000',
     sortOrder: section.sortOrder || ''
   })
+  setSectionImagePreview(section.headerImage ? `http://localhost:4001${section.headerImage}` : null)
 }
 
 const handleUpdateSection = async (e) => {
@@ -191,7 +204,7 @@ const handleUpdateSection = async (e) => {
     setMenu(await getMenu())
     alert('Section updated!')
                   setEditingSection(null)
-                  setSectionForm({ name: '', subtitle: '', cardBg: '', headerImage: '', priceTagBg: '', itemCardBg: '', itemCardText: '', sortOrder: '' })
+                  setSectionForm({ name: '', subtitle: '', cardBg: '', headerImage: '', priceTagBg: '', itemCardBg: '', itemCardText: '', headerText: '', subtitleText: '', categoryActiveBg: '', categoryActiveText: '', categoryInactiveBg: '', categoryInactiveText: '', sortOrder: '' })
     setSectionImageFile(null)
     setSectionImagePreview(null)
   } catch (error) {
@@ -678,6 +691,60 @@ const handleDeleteSection = async (sectionId) => {
                 />
               </div>
               <div>
+                <label className="block text-sm font-medium mb-2 text-white/90">Header Text Color</label>
+                <input
+                  placeholder="#ffffff"
+                  value={sectionForm.headerText}
+                  onChange={(e) => setSectionForm({...sectionForm, headerText: e.target.value})}
+                  className="w-full p-3 rounded-xl bg-white/20 border border-white/30 text-white placeholder-white/70"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2 text-white/90">Subtitle Text Color</label>
+                <input
+                  placeholder="#ffffff"
+                  value={sectionForm.subtitleText}
+                  onChange={(e) => setSectionForm({...sectionForm, subtitleText: e.target.value})}
+                  className="w-full p-3 rounded-xl bg-white/20 border border-white/30 text-white placeholder-white/70"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2 text-white/90">Category Active Background Color</label>
+                <input
+                  placeholder="#ED473F"
+                  value={sectionForm.categoryActiveBg}
+                  onChange={(e) => setSectionForm({...sectionForm, categoryActiveBg: e.target.value})}
+                  className="w-full p-3 rounded-xl bg-white/20 border border-white/30 text-white placeholder-white/70"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2 text-white/90">Category Active Text Color</label>
+                <input
+                  placeholder="#ffffff"
+                  value={sectionForm.categoryActiveText}
+                  onChange={(e) => setSectionForm({...sectionForm, categoryActiveText: e.target.value})}
+                  className="w-full p-3 rounded-xl bg-white/20 border border-white/30 text-white placeholder-white/70"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2 text-white/90">Category Inactive Background Color</label>
+                <input
+                  placeholder="#F4F0E7"
+                  value={sectionForm.categoryInactiveBg}
+                  onChange={(e) => setSectionForm({...sectionForm, categoryInactiveBg: e.target.value})}
+                  className="w-full p-3 rounded-xl bg-white/20 border border-white/30 text-white placeholder-white/70"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2 text-white/90">Category Inactive Text Color</label>
+                <input
+                  placeholder="#000000"
+                  value={sectionForm.categoryInactiveText}
+                  onChange={(e) => setSectionForm({...sectionForm, categoryInactiveText: e.target.value})}
+                  className="w-full p-3 rounded-xl bg-white/20 border border-white/30 text-white placeholder-white/70"
+                />
+              </div>
+              <div>
                 <label className="block text-sm font-medium mb-2 text-white/90">Sort Order</label>
                 <input
                   type="number"
@@ -700,11 +767,7 @@ const handleDeleteSection = async (sectionId) => {
                     <img src={sectionImagePreview} alt="Preview" className="w-20 h-20 object-cover rounded-xl border-2 border-white/50 shadow-lg flex-shrink-0" />
                   )}
                 </div>
-                {sectionForm.headerImage && !sectionImageFile && (
-                  <div className="mt-2 text-xs opacity-75 text-white/80">
-                    Current: <a href={`http://localhost:4001${sectionForm.headerImage}`} target="_blank" className="underline hover:text-blue-400">View</a>
-                  </div>
-                )}
+
               </div>
               <button
                 type="submit"
@@ -717,7 +780,7 @@ const handleDeleteSection = async (sectionId) => {
                   type="button"
                   onClick={() => {
                     setEditingSection(null)
-                    setSectionForm({ name: '', subtitle: '', cardBg: '', headerImage: '', priceTagBg: '', itemCardBg: '', itemCardText: '' })
+                    setSectionForm({ name: '', subtitle: '', cardBg: '', headerImage: '', priceTagBg: '', itemCardBg: '', itemCardText: '', headerText: '', subtitleText: '', categoryActiveBg: '', categoryActiveText: '', categoryInactiveBg: '', categoryInactiveText: '', sortOrder: '' })
                     setSectionImageFile(null)
                     setSectionImagePreview(null)
                   }}

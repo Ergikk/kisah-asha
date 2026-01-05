@@ -4,7 +4,7 @@
       "id": "breakfast",
       "name": "Breakfast & Pastry",
       "subtitle": "Our selected menu's to start your day",
-      "sortOrder": 2,
+      "sortOrder": 1,
       "categories": [
         {
           "id": "breakfast-menu",
@@ -105,8 +105,8 @@
         }
       ],
       "cardBg": "#803932",
-      "headerImage": "",
-      "priceTagBg": "#6c3a34",
+      "headerImage": "/images/1767583277023-324122604.png",
+      "priceTagBg": "#803932",
       "itemCardBg": "#F4F0E7",
       "itemCardText": "#000000"
     },
@@ -114,7 +114,7 @@
       "id": "food",
       "name": "Food",
       "subtitle": "Hearty dishes of Main Course, Kids Meal, Pasta, & Snacks",
-      "sortOrder": 3,
+      "sortOrder": 2,
       "categories": [
         {
           "id": "main-course",
@@ -445,17 +445,23 @@
           ]
         }
       ],
-      "cardBg": "#803932",
-      "headerImage": "",
+      "cardBg": "#F4F0E7",
+      "headerImage": "/images/1767583374251-278340751.png",
       "priceTagBg": "#647767",
       "itemCardBg": "#F4F0E7",
-      "itemCardText": "#000000"
+      "itemCardText": "#000000",
+      "headerText": "#000000",
+      "subtitleText": "#000000",
+      "categoryActiveBg": "#647767",
+      "categoryActiveText": "#ffffff",
+      "categoryInactiveBg": "#F4F0E7",
+      "categoryInactiveText": "#000000"
     },
     {
       "id": "beverage",
       "name": "Beverage",
       "subtitle": "From bold brews to gentle refreshers",
-      "sortOrder": 4,
+      "sortOrder": 3,
       "categories": [
         {
           "id": "signature-coffee",
@@ -878,11 +884,13 @@
           ]
         }
       ],
-      "cardBg": "#803932",
-      "headerImage": "",
-      "priceTagBg": "#363635",
-      "itemCardBg": "#ED473F",
-      "itemCardText": "#FFFFFF"
+      "cardBg": "#ED473F",
+      "headerImage": "/images/1767583388563-922333238.png",
+      "priceTagBg": "#ED473F",
+      "itemCardBg": "#363635",
+      "itemCardText": "#FFFFFF",
+      "headerText": "#ffffff",
+      "subtitleText": "#ffffff"
     }
   ]
 }

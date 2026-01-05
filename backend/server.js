@@ -72,7 +72,7 @@ app.get('/api/menu', (req, res) => {
   res.json(data)
 })
 
-app.post('/api/items', upload.single('image'), (req, res) => {
+app.post('/api/items', (req, res) => {
   let { sectionId, categoryId, item: itemData } = req.body
   if (!sectionId || !categoryId || !itemData) {
     return res.status(400).json({ error: 'Missing required fields' })
@@ -170,6 +170,7 @@ app.delete('/api/items/:sectionId/:categoryId/:itemId', (req, res) => {
   if (!category) return res.status(404).json({ error: 'Category not found' })
 
   category.items = category.items.filter((i) => i.id !== itemId)
+  normalizeItemSortOrders(category)
   writeData(data)
   res.json({ success: true })
 })
@@ -267,6 +268,7 @@ app.delete('/api/sections/:sectionId', (req, res) => {
   }
 
   data.sections.splice(sectionIndex, 1)
+  normalizeSectionSortOrders(data)
   writeData(data)
   res.json({ success: true })
 })
