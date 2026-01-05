@@ -1,6 +1,7 @@
 import { put, del } from '@vercel/blob'
 
-const BLOB_URL = 'https://xckyxnhc311lyejo.public.blob.vercel-storage.com/menu-data-fEs3LaKmzCPLwGFilnXxwkOtQ1N9F4.json'
+const BLOB_NAME = 'menu-data-fEs3LaKmzCPLwGFilnXxwkOtQ1N9F4.json'
+const BLOB_URL = `https://xckyxnhc311lyejo.public.blob.vercel-storage.com/${BLOB_NAME}`
 
 async function readData() {
   try {
