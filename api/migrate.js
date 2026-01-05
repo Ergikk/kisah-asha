@@ -5,7 +5,7 @@ import { put } from '@vercel/blob'
 const DATA_PATH = path.join(process.cwd(), 'data', 'menu.json')
 
 export default async function handler(req, res) {
-  if (req.method === 'POST') {
+  if (req.method === 'GET' || req.method === 'POST') {
     try {
       // Read existing data
       if (!fs.existsSync(DATA_PATH)) {
@@ -30,7 +30,12 @@ export default async function handler(req, res) {
         success: true,
         message: 'Migration completed successfully',
         blobUrl: blob.url,
-        data: data
+        migratedSections: data.sections?.length || 0,
+        migratedItems: data.sections?.reduce((total, section) =>
+          total + section.categories?.reduce((catTotal, category) =>
+            catTotal + (category.items?.length || 0), 0
+          ) || 0, 0
+        ) || 0
       })
 
     } catch (error) {
@@ -41,7 +46,7 @@ export default async function handler(req, res) {
       })
     }
   } else {
-    res.setHeader('Allow', ['POST'])
+    res.setHeader('Allow', ['GET', 'POST'])
     res.status(405).end(`Method ${req.method} Not Allowed`)
   }
 }
