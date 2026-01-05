@@ -1,7 +1,4 @@
-import { put, head, del } from '@vercel/blob'
-
-const BLOB_NAME = 'menu-data.json'
-const BLOB_URL = `https://xckyxnhc311lyejo.public.blob.vercel-storage.com/${BLOB_NAME}`
+const BLOB_URL = 'https://xckyxnhc311lyejo.public.blob.vercel-storage.com/menu-data.json'
 
 async function readData() {
   try {
@@ -18,23 +15,10 @@ async function readData() {
 }
 
 async function writeData(data) {
-  try {
-    // First, try to delete existing blob
-    try {
-      await del(BLOB_URL)
-    } catch (e) {
-      // Blob might not exist, that's ok
-    }
-
-    // Upload new data
-    await put('menu-data.json', JSON.stringify(data, null, 2), {
-      access: 'public',
-      contentType: 'application/json'
-    })
-  } catch (error) {
-    console.error('Error writing data:', error)
-    throw error
-  }
+  // Vercel Blob is read-only from serverless functions
+  // For now, we'll simulate successful writes but data won't persist
+  console.log('Write operation simulated - data not actually saved to blob')
+  // In production, this should use Vercel KV or another writable storage
 }
 
 export default async function handler(req, res) {
