@@ -369,6 +369,4 @@ app.post('/api/admin/login', (req, res) => {
   res.json({ token, level })
 })
 
-app.listen(PORT, () => {
-  console.log(`Backend: http://localhost:${PORT}`)
-})
+module.exports = app
