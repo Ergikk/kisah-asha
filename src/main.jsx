@@ -15,11 +15,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/" element={<App />}>
           <Route index element={<PublicMenu />} />
         </Route>
-        <Route path="/admin" element={<AdminGuard />} />
-        
         {/* NEW: Separate login route */}
         <Route path="/admin-login" element={<AdminLogin />} />
-        
+
         {/* NEW: Protected admin routes */}
         <Route path="/admin" element={<AdminGuard />}>
           <Route index element={<Admin />} />
