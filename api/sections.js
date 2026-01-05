@@ -1,23 +1,39 @@
-import fs from 'fs'
-import path from 'path'
-import { fileURLToPath } from 'url'
+import { put, del } from '@vercel/blob'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-const DATA_PATH = path.join(__dirname, '..', 'data', 'menu.json')
+const BLOB_URL = 'https://asha-menu-backend.vercel.app/menu-data.json'
 
-function readData() {
-  if (!fs.existsSync(DATA_PATH)) {
-    const defaultData = { sections: [] }
-    fs.writeFileSync(DATA_PATH, JSON.stringify(defaultData, null, 2))
-    return defaultData
+async function readData() {
+  try {
+    const response = await fetch(BLOB_URL)
+    if (!response.ok) {
+      // If blob doesn't exist, return default data
+      return { sections: [] }
+    }
+    return await response.json()
+  } catch (error) {
+    console.error('Error reading data:', error)
+    return { sections: [] }
   }
-  const raw = fs.readFileSync(DATA_PATH, 'utf8')
-  return JSON.parse(raw)
 }
 
-function writeData(data) {
-  fs.writeFileSync(DATA_PATH, JSON.stringify(data, null, 2), 'utf8')
+async function writeData(data) {
+  try {
+    // First, try to delete existing blob
+    try {
+      await del(BLOB_URL)
+    } catch (e) {
+      // Blob might not exist, that's ok
+    }
+
+    // Upload new data
+    await put('menu-data.json', JSON.stringify(data, null, 2), {
+      access: 'public',
+      contentType: 'application/json'
+    })
+  } catch (error) {
+    console.error('Error writing data:', error)
+    throw error
+  }
 }
 
 function normalizeSectionSortOrders(data) {
@@ -27,35 +43,40 @@ function normalizeSectionSortOrders(data) {
   })
 }
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method === 'POST') {
-    const section = req.body
-    if (!section.id || !section.name) {
-      return res.status(400).json({ error: 'Missing required fields: id, name' })
-    }
-
-    const data = readData()
-    const existingIndex = data.sections.findIndex(s => s.id === section.id)
-    if (existingIndex >= 0) {
-      return res.status(400).json({ error: 'Section with this id already exists' })
-    }
-
-    const newSortOrder = Number(section.sortOrder) || (data.sections.length + 1)
-
-    // Shift sections with sortOrder >= newSortOrder
-    data.sections.forEach((s) => {
-      if (Number(s.sortOrder) >= newSortOrder) {
-        s.sortOrder = Number(s.sortOrder) + 1
+    try {
+      const section = req.body
+      if (!section.id || !section.name) {
+        return res.status(400).json({ error: 'Missing required fields: id, name' })
       }
-    })
 
-    data.sections.push({
-      ...section,
-      sortOrder: Number(newSortOrder),
-      categories: section.categories || []
-    })
-    writeData(data)
-    res.status(200).json(section)
+      const data = await readData()
+      const existingIndex = data.sections.findIndex(s => s.id === section.id)
+      if (existingIndex >= 0) {
+        return res.status(400).json({ error: 'Section with this id already exists' })
+      }
+
+      const newSortOrder = Number(section.sortOrder) || (data.sections.length + 1)
+
+      // Shift sections with sortOrder >= newSortOrder
+      data.sections.forEach((s) => {
+        if (Number(s.sortOrder) >= newSortOrder) {
+          s.sortOrder = Number(s.sortOrder) + 1
+        }
+      })
+
+      data.sections.push({
+        ...section,
+        sortOrder: Number(newSortOrder),
+        categories: section.categories || []
+      })
+      await writeData(data)
+      res.status(200).json(section)
+    } catch (error) {
+      console.error('Error in POST /api/sections:', error)
+      res.status(500).json({ error: 'Failed to create section' })
+    }
   } else {
     res.setHeader('Allow', ['POST'])
     res.status(405).end(`Method ${req.method} Not Allowed`)

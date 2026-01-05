@@ -34,26 +34,27 @@ function normalizeItemSortOrders(category) {
   })
 }
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method === 'POST') {
-    // Handle POST /api/items
-    let { sectionId, categoryId, item: itemData } = req.body
-    if (!sectionId || !categoryId || !itemData) {
-      return res.status(400).json({ error: 'Missing required fields' })
-    }
-
-    let item
     try {
-      if (typeof itemData === 'string') item = JSON.parse(itemData)
-      else item = itemData
-    } catch (e) {
-      return res.status(400).json({
-        error: 'Invalid item format (expected JSON string or object)',
-        receivedType: typeof itemData,
-      })
-    }
+      // Handle POST /api/items
+      let { sectionId, categoryId, item: itemData } = req.body
+      if (!sectionId || !categoryId || !itemData) {
+        return res.status(400).json({ error: 'Missing required fields' })
+      }
 
-    const data = readData()
+      let item
+      try {
+        if (typeof itemData === 'string') item = JSON.parse(itemData)
+        else item = itemData
+      } catch (e) {
+        return res.status(400).json({
+          error: 'Invalid item format (expected JSON string or object)',
+          receivedType: typeof itemData,
+        })
+      }
+
+      const data = await readData()
 
     let section = data.sections.find((s) => s.id === sectionId)
     if (!section) {
