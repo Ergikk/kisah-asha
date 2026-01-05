@@ -88,7 +88,7 @@ export default function Admin() {
       image: item.image || '',
       sortOrder: String(item.sortOrder || '')
     })
-    setImagePreview(item.image ? item.image : null)
+    setImagePreview(item.image ? `${API_URL}${item.image}` : null)
     setCurrentAction('edit')
     setShowAddItemModal(true)
   }
@@ -187,7 +187,7 @@ const handleEditSection = (section) => {
     categoryInactiveText: section.categoryInactiveText || '#000000',
     sortOrder: section.sortOrder || ''
   })
-  setSectionImagePreview(section.headerImage ? section.headerImage : null)
+  setSectionImagePreview(section.headerImage ? `${API_URL}${section.headerImage}` : null)
 }
 
 const handleUpdateSection = async (e) => {
@@ -624,8 +624,8 @@ const handleDeleteSection = async (sectionId) => {
 
       {/* Manage Section Modal */}
       {showManageSectionModal && ReactDOM.createPortal(
-        <div className="fixed inset-0 z-50 bg-[#6f7f72] backdrop-blur-sm flex items-center justify-center" onClick={() => setShowManageSectionModal(false)}>
-          <div className="bg-gradient-to-br from-black/40 to-black/60 backdrop-blur-md p-10 rounded-3xl border-2 border-white/20 space-y-4 w-full max-w-2xl max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+        <div className="fixed inset-0 z-50 bg-[#6f7f72] backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setShowManageSectionModal(false)}>
+          <div className="bg-gradient-to-br from-black/40 to-black/60 backdrop-blur-md p-6 rounded-3xl border-2 border-white/20 space-y-4 w-full max-w-2xl max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
             <div className="flex justify-between items-center">
               <h3 className="font-bold text-xl text-white/95">Manage Sections</h3>
               <button
@@ -818,7 +818,8 @@ const handleDeleteSection = async (sectionId) => {
               ))}
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   )
