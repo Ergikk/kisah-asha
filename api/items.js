@@ -1,23 +1,39 @@
-import fs from 'fs'
-import path from 'path'
-import { fileURLToPath } from 'url'
+import { put, head, del } from '@vercel/blob'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-const DATA_PATH = path.join(__dirname, '..', 'data', 'menu.json')
+const BLOB_URL = 'https://asha-menu-backend.vercel.app/menu-data.json'
 
-function readData() {
-  if (!fs.existsSync(DATA_PATH)) {
-    const defaultData = { sections: [] }
-    fs.writeFileSync(DATA_PATH, JSON.stringify(defaultData, null, 2))
-    return defaultData
+async function readData() {
+  try {
+    const response = await fetch(BLOB_URL)
+    if (!response.ok) {
+      // If blob doesn't exist, return default data
+      return { sections: [] }
+    }
+    return await response.json()
+  } catch (error) {
+    console.error('Error reading data:', error)
+    return { sections: [] }
   }
-  const raw = fs.readFileSync(DATA_PATH, 'utf8')
-  return JSON.parse(raw)
 }
 
-function writeData(data) {
-  fs.writeFileSync(DATA_PATH, JSON.stringify(data, null, 2), 'utf8')
+async function writeData(data) {
+  try {
+    // First, try to delete existing blob
+    try {
+      await del(BLOB_URL)
+    } catch (e) {
+      // Blob might not exist, that's ok
+    }
+
+    // Upload new data
+    await put('menu-data.json', JSON.stringify(data, null, 2), {
+      access: 'public',
+      contentType: 'application/json'
+    })
+  } catch (error) {
+    console.error('Error writing data:', error)
+    throw error
+  }
 }
 
 function normalizeSectionSortOrders(data) {
@@ -56,69 +72,73 @@ export default async function handler(req, res) {
 
       const data = await readData()
 
-    let section = data.sections.find((s) => s.id === sectionId)
-    if (!section) {
-      section = { id: sectionId, name: sectionId, categories: [] }
-      data.sections.push(section)
-    }
-
-    let category = section.categories.find((c) => c.id === categoryId)
-    if (!category) {
-      category = {
-        id: categoryId,
-        name: categoryId
-          .replace(/-/g, ' ')
-          .replace(/\b\w/g, (l) => l.toUpperCase()),
-        items: [],
-      }
-      section.categories.push(category)
-    }
-
-    const index = category.items.findIndex((i) => i.id === item.id)
-    if (index >= 0) {
-      // Editing existing item
-      const existingItem = category.items[index]
-      const oldSortOrder = Number(existingItem.sortOrder) || 1
-      const newSortOrder = Number(item.sortOrder) || oldSortOrder
-
-      // Shift other items based on the move direction
-      if (newSortOrder !== oldSortOrder) {
-        if (newSortOrder < oldSortOrder) {
-          // Moving up: shift items between newSortOrder and oldSortOrder-1 up by 1
-          category.items.forEach((i, idx) => {
-            if (idx !== index && Number(i.sortOrder) >= newSortOrder && Number(i.sortOrder) < oldSortOrder) {
-              i.sortOrder = Number(i.sortOrder) + 1
-            }
-          })
-        } else if (newSortOrder > oldSortOrder) {
-          // Moving down: shift items between oldSortOrder+1 and newSortOrder down by 1
-          category.items.forEach((i, idx) => {
-            if (idx !== index && Number(i.sortOrder) > oldSortOrder && Number(i.sortOrder) <= newSortOrder) {
-              i.sortOrder = Number(i.sortOrder) - 1
-            }
-          })
-        }
+      let section = data.sections.find((s) => s.id === sectionId)
+      if (!section) {
+        section = { id: sectionId, name: sectionId, categories: [] }
+        data.sections.push(section)
       }
 
-      item.sortOrder = newSortOrder
-      category.items[index] = item
-    } else {
-      // Adding new item
-      const newSortOrder = item.sortOrder || 1
-
-      // Shift items with sortOrder >= newSortOrder
-      category.items.forEach((i) => {
-        if (i.sortOrder >= newSortOrder) {
-          i.sortOrder += 1
+      let category = section.categories.find((c) => c.id === categoryId)
+      if (!category) {
+        category = {
+          id: categoryId,
+          name: categoryId
+            .replace(/-/g, ' ')
+            .replace(/\b\w/g, (l) => l.toUpperCase()),
+          items: [],
         }
-      })
+        section.categories.push(category)
+      }
 
-      item.sortOrder = newSortOrder
-      category.items.push(item)
+      const index = category.items.findIndex((i) => i.id === item.id)
+      if (index >= 0) {
+        // Editing existing item
+        const existingItem = category.items[index]
+        const oldSortOrder = Number(existingItem.sortOrder) || 1
+        const newSortOrder = Number(item.sortOrder) || oldSortOrder
+
+        // Shift other items based on the move direction
+        if (newSortOrder !== oldSortOrder) {
+          if (newSortOrder < oldSortOrder) {
+            // Moving up: shift items between newSortOrder and oldSortOrder-1 up by 1
+            category.items.forEach((i, idx) => {
+              if (idx !== index && Number(i.sortOrder) >= newSortOrder && Number(i.sortOrder) < oldSortOrder) {
+                i.sortOrder = Number(i.sortOrder) + 1
+              }
+            })
+          } else if (newSortOrder > oldSortOrder) {
+            // Moving down: shift items between oldSortOrder+1 and newSortOrder down by 1
+            category.items.forEach((i, idx) => {
+              if (idx !== index && Number(i.sortOrder) > oldSortOrder && Number(i.sortOrder) <= newSortOrder) {
+                i.sortOrder = Number(i.sortOrder) - 1
+              }
+            })
+          }
+        }
+
+        item.sortOrder = newSortOrder
+        category.items[index] = item
+      } else {
+        // Adding new item
+        const newSortOrder = item.sortOrder || 1
+
+        // Shift items with sortOrder >= newSortOrder
+        category.items.forEach((i) => {
+          if (i.sortOrder >= newSortOrder) {
+            i.sortOrder += 1
+          }
+        })
+
+        item.sortOrder = newSortOrder
+        category.items.push(item)
+      }
+
+      await writeData(data)
+      res.status(200).json(item)
+    } catch (error) {
+      console.error('Error in POST /api/items:', error)
+      res.status(500).json({ error: 'Failed to save item' })
     }
-
-    writeData(data)
-    res.status(200).json(item)
   } else {
     res.setHeader('Allow', ['POST'])
     res.status(405).end(`Method ${req.method} Not Allowed`)
