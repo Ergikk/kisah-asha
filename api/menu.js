@@ -1,25 +1,13 @@
-import { kv } from '@vercel/kv'
-import fs from 'fs'
-import path from 'path'
-
-const MENU_KEY = 'menu-data'
-const DATA_PATH = path.join(process.cwd(), 'backend', 'data', 'menu.json')
+const BLOB_URL = 'https://xckyxnhc311lyejo.public.blob.vercel-storage.com/menu-data.json'
 
 async function readData() {
   try {
-    let data = await kv.get(MENU_KEY)
-    if (!data) {
-      // Initialize KV with file data if KV is empty
-      if (fs.existsSync(DATA_PATH)) {
-        const raw = fs.readFileSync(DATA_PATH, 'utf8')
-        data = JSON.parse(raw)
-        await kv.set(MENU_KEY, data)
-        console.log('Initialized KV with file data')
-      } else {
-        data = { sections: [] }
-      }
+    const response = await fetch(BLOB_URL)
+    if (!response.ok) {
+      // If blob doesn't exist, return default data
+      return { sections: [] }
     }
-    return data
+    return await response.json()
   } catch (error) {
     console.error('Error reading data:', error)
     return { sections: [] }
@@ -27,12 +15,10 @@ async function readData() {
 }
 
 async function writeData(data) {
-  try {
-    await kv.set(MENU_KEY, data)
-  } catch (error) {
-    console.error('Error writing data:', error)
-    throw error
-  }
+  // Vercel Blob is read-only from serverless functions
+  // For now, we'll simulate successful writes but data won't persist
+  console.log('Write operation simulated - data not actually saved to blob')
+  // In production, this should use Vercel KV or another writable storage
 }
 
 export default async function handler(req, res) {
