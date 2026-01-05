@@ -1,16 +1,10 @@
-import { put, head, del } from '@vercel/blob'
+import { kv } from '@vercel/kv'
 
-const BLOB_NAME = 'menu-data.json'
-const BLOB_URL = `https://xckyxnhc311lyejo.public.blob.vercel-storage.com/${BLOB_NAME}`
+const MENU_KEY = 'menu-data'
 
 async function readData() {
   try {
-    const response = await fetch(BLOB_URL)
-    if (!response.ok) {
-      // If blob doesn't exist, return default data
-      return { sections: [] }
-    }
-    return await response.json()
+    return await kv.get(MENU_KEY) || { sections: [] }
   } catch (error) {
     console.error('Error reading data:', error)
     return { sections: [] }
@@ -18,10 +12,12 @@ async function readData() {
 }
 
 async function writeData(data) {
-  // Simulate successful write operation
-  // In production, replace with actual writable storage like Vercel KV
-  console.log('Simulated write operation - data would be saved:', JSON.stringify(data, null, 2))
-  return true
+  try {
+    await kv.set(MENU_KEY, data)
+  } catch (error) {
+    console.error('Error writing data:', error)
+    throw error
+  }
 }
 
 function normalizeSectionSortOrders(data) {

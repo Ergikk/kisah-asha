@@ -1,13 +1,10 @@
-const BLOB_URL = 'https://xckyxnhc311lyejo.public.blob.vercel-storage.com/menu-data.json'
+import { kv } from '@vercel/kv'
+
+const MENU_KEY = 'menu-data'
 
 async function readData() {
   try {
-    const response = await fetch(BLOB_URL)
-    if (!response.ok) {
-      // If blob doesn't exist, return default data
-      return { sections: [] }
-    }
-    return await response.json()
+    return await kv.get(MENU_KEY) || { sections: [] }
   } catch (error) {
     console.error('Error reading data:', error)
     return { sections: [] }
@@ -15,10 +12,12 @@ async function readData() {
 }
 
 async function writeData(data) {
-  // Vercel Blob is read-only from serverless functions
-  // For now, we'll simulate successful writes but data won't persist
-  console.log('Write operation simulated - data not actually saved to blob')
-  // In production, this should use Vercel KV or another writable storage
+  try {
+    await kv.set(MENU_KEY, data)
+  } catch (error) {
+    console.error('Error writing data:', error)
+    throw error
+  }
 }
 
 export default async function handler(req, res) {
