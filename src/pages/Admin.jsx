@@ -42,9 +42,10 @@ export default function Admin() {
   }, [])
 
   const uploadImage = async (file) => {
+    const BASE_URL = API_URL || ''
     const formData = new FormData()
     formData.append('image', file)
-    const res = await fetch(`${API_URL}/api/upload`, { method: 'POST', body: formData })
+    const res = await fetch(`${BASE_URL}/api/upload`, { method: 'POST', body: formData })
     const data = await res.json()
     return data.image
   }
@@ -360,7 +361,7 @@ const handleDeleteSection = async (sectionId) => {
                   <div key={`${section.id}-${category.id}-${item.id}-${item.isAvailable}`} className="flex items-center justify-between p-4 bg-white/10 rounded-xl border border-white/20 hover:bg-white/20 transition-all">
                     <div className="flex items-center space-x-4 flex-1 min-w-0">
                       {item.image ? (
-                        <img src={item.image} alt={item.name} className="w-16 h-16 rounded-lg object-cover border border-white/50 flex-shrink-0" />
+                        <img src={`${API_URL}${item.image}`} alt={item.name} className="w-16 h-16 rounded-lg object-cover border border-white/50 flex-shrink-0" />
                       ) : (
                         <div className="w-16 h-16 bg-gray-500/50 rounded-lg flex items-center justify-center text-xs text-white/80 flex-shrink-0">No img</div>
                       )}
@@ -445,7 +446,7 @@ const handleDeleteSection = async (sectionId) => {
                     <div key={item.id} className="flex items-center justify-between p-3 md:p-4 bg-white/20 rounded-lg hover:bg-white/30 transition-all">
                       <div className="flex items-center space-x-3 flex-1 min-w-0">
                         {item.image ? (
-                          <img src={item.image} alt={item.name} className="w-12 h-12 md:w-16 md:h-16 rounded-lg object-cover border border-white/50 flex-shrink-0" />
+                          <img src={`${API_URL}${item.image}`} alt={item.name} className="w-12 h-12 md:w-16 md:h-16 rounded-lg object-cover border border-white/50 flex-shrink-0" />
                         ) : (
                           <div className="w-12 h-12 md:w-16 md:h-16 bg-gray-500/50 rounded-lg flex items-center justify-center text-xs text-white/80 flex-shrink-0">No img</div>
                         )}

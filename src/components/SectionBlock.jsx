@@ -11,7 +11,7 @@ function getSectionStyle(section) {
     cardBg: section.cardBg || '#803932',
     headerText: section.headerText || '#ffffff',
     subtitleText: section.subtitleText || '#ffffff',
-    headerImage: section.headerImage || '/images/breakfast-bg.png',
+    headerImage: section.headerImage ? `${API_URL}${section.headerImage}` : '/images/breakfast-bg.png',
     categoryActiveBg: section.categoryActiveBg || '#ED473F',
     categoryActiveText: section.categoryActiveText || '#ffffff',
     categoryInactiveBg: section.categoryInactiveBg || '#F4F0E7',
