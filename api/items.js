@@ -1,28 +1,4 @@
-import { put, head, del } from '@vercel/blob'
-
-const BLOB_NAME = 'menu-data.json'
-const BLOB_URL = `https://xckyxnhc311lyejo.public.blob.vercel-storage.com/${BLOB_NAME}`
-
-async function readData() {
-  try {
-    const response = await fetch(BLOB_URL)
-    if (!response.ok) {
-      // If blob doesn't exist, return default data
-      return { sections: [] }
-    }
-    return await response.json()
-  } catch (error) {
-    console.error('Error reading data:', error)
-    return { sections: [] }
-  }
-}
-
-async function writeData(data) {
-  // Simulate successful write operation
-  // In production, replace with actual writable storage like Vercel KV
-  console.log('Simulated write operation - data would be saved:', JSON.stringify(data, null, 2))
-  return true
-}
+import { getMenuData, writeMenuData } from './_lib/db.js'
 
 function normalizeSectionSortOrders(data) {
   data.sections.sort((a, b) => Number(a.sortOrder) - Number(b.sortOrder))
@@ -58,7 +34,7 @@ export default async function handler(req, res) {
         })
       }
 
-      const data = await readData()
+      const data = await getMenuData()
 
       let section = data.sections.find((s) => s.id === sectionId)
       if (!section) {
@@ -121,7 +97,7 @@ export default async function handler(req, res) {
         category.items.push(item)
       }
 
-      await writeData(data)
+      await writeMenuData(data)
       res.status(200).json(item)
     } catch (error) {
       console.error('Error in POST /api/items:', error)

@@ -1,41 +1,4 @@
-import { put, del } from '@vercel/blob'
-
-const BLOB_NAME = 'menu-data-fEs3LaKmzCPLwGFilnXxwkOtQ1N9F4.json'
-const BLOB_URL = `https://xckyxnhc311lyejo.public.blob.vercel-storage.com/${BLOB_NAME}`
-
-async function readData() {
-  try {
-    const response = await fetch(BLOB_URL)
-    if (!response.ok) {
-      // If blob doesn't exist, return default data
-      return { sections: [] }
-    }
-    return await response.json()
-  } catch (error) {
-    console.error('Error reading data:', error)
-    return { sections: [] }
-  }
-}
-
-async function writeData(data) {
-  try {
-    // First, try to delete existing blob
-    try {
-      await del(BLOB_URL)
-    } catch (e) {
-      // Blob might not exist, that's ok
-    }
-
-    // Upload new data
-    await put('menu-data.json', JSON.stringify(data, null, 2), {
-      access: 'public',
-      contentType: 'application/json'
-    })
-  } catch (error) {
-    console.error('Error writing data:', error)
-    throw error
-  }
-}
+import { getMenuData, writeMenuData } from '../_lib/db.js'
 
 function normalizeSectionSortOrders(data) {
   data.sections.sort((a, b) => Number(a.sortOrder) - Number(b.sortOrder))
@@ -51,7 +14,7 @@ export default async function handler(req, res) {
     try {
       const updates = req.body
 
-      const data = await readData()
+      const data = await getMenuData()
       const sectionIndex = data.sections.findIndex(s => s.id === sectionId)
       if (sectionIndex === -1) {
         return res.status(404).json({ error: 'Section not found' })
@@ -90,7 +53,7 @@ export default async function handler(req, res) {
       // Normalize sortOrders to ensure they are sequential and unique
       normalizeSectionSortOrders(data)
 
-      await writeData(data)
+      await writeMenuData(data)
       res.status(200).json(data.sections[sectionIndex])
     } catch (error) {
       console.error('Error in PUT /api/sections/[sectionId]:', error)
@@ -98,7 +61,7 @@ export default async function handler(req, res) {
     }
   } else if (req.method === 'DELETE') {
     try {
-      const data = await readData()
+      const data = await getMenuData()
       const sectionIndex = data.sections.findIndex(s => s.id === sectionId)
       if (sectionIndex === -1) {
         return res.status(404).json({ error: 'Section not found' })
@@ -106,7 +69,7 @@ export default async function handler(req, res) {
 
       data.sections.splice(sectionIndex, 1)
       normalizeSectionSortOrders(data)
-      await writeData(data)
+      await writeMenuData(data)
       res.status(200).json({ success: true })
     } catch (error) {
       console.error('Error in DELETE /api/sections/[sectionId]:', error)

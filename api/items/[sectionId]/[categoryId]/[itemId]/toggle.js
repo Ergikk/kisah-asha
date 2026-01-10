@@ -1,48 +1,11 @@
-import { put, del } from '@vercel/blob'
-
-const BLOB_NAME = 'menu-data-fEs3LaKmzCPLwGFilnXxwkOtQ1N9F4.json'
-const BLOB_URL = `https://xckyxnhc311lyejo.public.blob.vercel-storage.com/${BLOB_NAME}`
-
-async function readData() {
-  try {
-    const response = await fetch(BLOB_URL)
-    if (!response.ok) {
-      // If blob doesn't exist, return default data
-      return { sections: [] }
-    }
-    return await response.json()
-  } catch (error) {
-    console.error('Error reading data:', error)
-    return { sections: [] }
-  }
-}
-
-async function writeData(data) {
-  try {
-    // First, try to delete existing blob
-    try {
-      await del(BLOB_URL)
-    } catch (e) {
-      // Blob might not exist, that's ok
-    }
-
-    // Upload new data
-    await put('menu-data.json', JSON.stringify(data, null, 2), {
-      access: 'public',
-      contentType: 'application/json'
-    })
-  } catch (error) {
-    console.error('Error writing data:', error)
-    throw error
-  }
-}
+import { getMenuData, writeMenuData } from '../../../../../_lib/db.js'
 
 export default async function handler(req, res) {
   const { sectionId, categoryId, itemId } = req.query
 
   if (req.method === 'PATCH') {
     try {
-      const data = await readData()
+      const data = await getMenuData()
       const section = data.sections.find(s => s.id === sectionId)
       if (!section) {
         return res.status(404).json({ error: 'Section not found' })
@@ -59,7 +22,7 @@ export default async function handler(req, res) {
       }
 
       item.isAvailable = !item.isAvailable
-      await writeData(data)
+      await writeMenuData(data)
       res.status(200).json(item)
     } catch (error) {
       console.error('Error in PATCH /api/items/.../toggle:', error)
