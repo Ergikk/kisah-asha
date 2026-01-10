@@ -369,4 +369,8 @@ app.post('/api/admin/login', (req, res) => {
   res.json({ token, level })
 })
 
-module.exports = app
+export default app
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`)
+})

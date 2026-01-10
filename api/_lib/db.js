@@ -26,7 +26,7 @@ export async function getDb() {
 
 export async function getMenuData() {
   const db = await getDb()
-  const doc = await db.collection('menu').findOne({ _id: 'menu' })
+  const doc = await db.collection('menu').findOne({ _id: '6962a502da01e50da076febf' })
   if (!doc) {
     return { sections: [] }
   }
@@ -38,7 +38,7 @@ export async function writeMenuData(data) {
   const db = await getDb()
   const sections = Array.isArray(data?.sections) ? data.sections : []
   await db.collection('menu').updateOne(
-    { _id: 'menu' },
+    { _id: '6962a502da01e50da076febf' },
     { $set: { sections } },
     { upsert: true }
   )
