@@ -11,7 +11,7 @@ export default function App() {
 
   useEffect(() => {
     const token = localStorage.getItem('asha_admin_token')
-    if (token && parseInt(token.split('_')[0]) > Date.now() - 60000) {
+    if (token && parseInt(token.split('_')[0]) > Date.now() - 60*60*1000) {
       setIsAuthenticated(true)
     }
   }, [])

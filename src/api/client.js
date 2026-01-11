@@ -3,6 +3,7 @@ const BASE_URL = API_URL || ''
 
 export async function getMenu() {
   const res = await fetch(`${API_URL}/api/menu`)
+  console.log(API_URL)
   if (!res.ok) throw new Error('Failed to fetch menu')
   return res.json()
 }

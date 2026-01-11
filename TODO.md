@@ -1,19 +1,10 @@
-# TODO: Make Sort Numbers Editable with Shifting Logic
+# Refactoring server.js to use db.js
 
-## Backend Changes
-- [ ] Update POST /api/items to handle sortOrder shifting for items in a category
-- [ ] Update POST /api/sections to handle sortOrder shifting for sections
-- [ ] Update PUT /api/sections/:sectionId to handle sortOrder shifting for sections
-
-## Frontend Changes
-- [x] Add sortOrder input field to Add/Edit Item Modal in Admin.jsx
-- [x] Add sortOrder input field to Manage Section Modal in Admin.jsx
-- [x] Update form state to include sortOrder
-- [x] Update handleSave and handleAddSection/handleUpdateSection to include sortOrder
-- [x] Add sorting logic to display sections, categories, and items by sortOrder
-- [x] Test the shifting logic by adding/editing items and sections
-
-## Testing
-- [x] Implementation complete - backend server running on port 4001
-- [x] Frontend code updated with sortOrder fields and sorting logic
-- [x] Ready for manual testing in browser
+## Steps to Complete:
+- [x] Update imports to include writeMenuData from db.js
+- [x] Remove file-based constants (DATA_PATH) and functions (readData, writeData)
+- [x] Remove initial fs code for creating data folder
+- [x] Make route handlers async where necessary
+- [x] Replace readData() calls with await getMenuData()
+- [x] Replace writeData(data) calls with await writeMenuData(data)
+- [x] Verify all changes and ensure consistency

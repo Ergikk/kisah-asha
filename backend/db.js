@@ -6,12 +6,12 @@ let cachedDb = null
 export async function getDb() {
   if (cachedDb) return cachedDb
 
-  const uri = process.env.MONGODB_URI
+  const uri = 'mongodb+srv://lrisdhi7_db_user:haB5EWEwPqNK91bx@cluster0.fu4xbhh.mongodb.net/'
   if (!uri) {
     throw new Error('Missing MONGODB_URI environment variable')
   }
 
-  const dbName = process.env.MONGODB_DB || 'kisah-asha'
+  const dbName = process.env.MONGODB_DB || 'asha-menu'
 
   if (!cachedClient) {
     cachedClient = new MongoClient(uri, {
@@ -27,6 +27,7 @@ export async function getDb() {
 export async function getMenuData() {
   const db = await getDb()
   const doc = await db.collection('menu').findOne({ _id: '6962a502da01e50da076febf' })
+  console.log(doc.sections)
   if (!doc) {
     return { sections: [] }
   }
@@ -43,5 +44,3 @@ export async function writeMenuData(data) {
     { upsert: true }
   )
 }
-
-
