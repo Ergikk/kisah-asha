@@ -8,6 +8,8 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.19.2",
-    "multer": "^2.0.2"
+    "mongodb": "^6.3.0",
+    "multer": "^2.0.2",
+    "vercel": "^50.1.6"
   }
 }

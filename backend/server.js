@@ -31,7 +31,10 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage })
 
-app.use(cors())
+app.use(cors({
+  origin: ['https://asha-menu.vercel.app', 'http://localhost:3000', 'http://localhost:5173'], // Allow specific origins
+  credentials: true
+}))
 app.use(express.json())
 app.use('/images', express.static(path.join(__dirname, 'public', 'images')))
 
