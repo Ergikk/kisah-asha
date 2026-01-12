@@ -79,7 +79,7 @@ export default function SectionBlock({ section }) {
       </div>
 
       {/* COLLAPSIBLE CONTENT - Hidden by default */}
-      <div className={`overflow-hidden transition-all duration-500 ease-out ${isExpanded ? 'opacity-100' : 'max-h-0 opacity-0'}`} style={{ backgroundColor: style.cardBg }}>
+      <div className={`overflow-hidden transition-all duration-500 ease-out rounded-b-2xl ${isExpanded ? 'opacity-100' : 'max-h-0 opacity-0'}`} style={{ backgroundColor: style.cardBg }}>
         {/* Category tabs - Only when expanded */}
         <div className="space-y-2 mt-4 mb-4 px-5">
           {categories.map((cat) => {
@@ -176,11 +176,17 @@ export default function SectionBlock({ section }) {
             <div className="text-xs italic text-gray-600">Scrambled/Sunny Side Up/Omelette/Boiled Egg</div>
           </div>
         )}
+
+        {/* Price disclaimer message */}
+        <div className="px-5 pb-2 text-center text-xs" style={{ color: style.headerText }}>
+          <div>Harga belum termasuk layanan 10%</div>
+          <div className="italic">Price does not include tax and service charge 10%</div>
+        </div>
       </div>
 
       {/* Modal - updated price tag position */}
       {openItem && (
-        <Modal onClose={() => setOpenItem(null)}>
+        <Modal onClose={() => setOpenItem(null)} borderColor={style.priceTagBg} bgColor={style.itemCardBg} textColor={style.itemCardText}>
           <div className="absolute inset-0 h-full w-full">
             {openItem.image ? (
               <img src={`${API_URL}${openItem.image}`} alt={openItem.name} className={`h-full w-full object-cover ${openItem.isAvailable === false ? 'grayscale' : ''}`} />
@@ -193,14 +199,14 @@ export default function SectionBlock({ section }) {
           <div className="absolute top-6 left-4 inline-flex items-center justify-center px-4 py-2 rounded-xl text-sm font-bold shadow-lg" style={{ backgroundColor: openItem.isAvailable ? style.priceTagBg : '#803932', color: 'white' }}>
             {openItem.isAvailable ? (openItem.customPrice || `Rp ${openItem.price?.toLocaleString('id-ID') || '36.000'}`) : 'SOLD OUT'}
           </div>
-          <h3 className="text-xl font-bold mb-3 leading-tight">{openItem.name}</h3>
+          <h3 className="text-xl font-bold mb-2 leading-tight">{openItem.name}</h3>
           {openItem.descriptionId && (
-            <p className="text-sm text-gray-800 mb-2 leading-relaxed">
+            <p className="text-sm mb-1 leading-tight">
               {openItem.descriptionId}
             </p>
           )}
           {openItem.descriptionEn && (
-            <p className="text-xs italic text-gray-600 mb-4">
+            <p className="text-xs italic mb-4 leading-tight">
               {openItem.descriptionEn}
             </p>
           )}

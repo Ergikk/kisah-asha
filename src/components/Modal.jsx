@@ -1,12 +1,12 @@
-export default function Modal({ children, onClose }) {
+export default function Modal({ children, onClose, borderColor = '#803932', bgColor = '#F0EBDE', textColor = '#000000' }) {
   return (
     <div
       className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-start justify-center p-4 pt-20"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      <div className="w-full max-w-sm bg-[#F0EBDE] text-black rounded-3xl overflow-hidden shadow-2xl max-h-[80vh] overflow-y-auto relative">
+      <div className="w-full max-w-sm rounded-3xl overflow-hidden shadow-2xl max-h-[80vh] overflow-y-auto relative" style={{ backgroundColor: bgColor, color: textColor }}>
         {/* Image - taller, no border radius/border */}
-        <div className="relative h-64 border-b-2 border-[#803932]">
+        <div className="relative h-64 border-b-2" style={{ borderColor: borderColor }}>
           {/* X button overlaying image */}
           <div className="absolute top-4 right-4 z-10 p-2">
             <button
