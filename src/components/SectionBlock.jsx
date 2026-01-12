@@ -178,7 +178,7 @@ export default function SectionBlock({ section }) {
         )}
 
         {/* Price disclaimer message */}
-        <div className="px-5 pb-2 text-center text-xs" style={{ color: style.headerText }}>
+        <div className="px-5 pb-2 text-center text-xs mb-3" style={{ color: style.headerText }}>
           <div>Harga belum termasuk pajak dan layanan 10%</div>
           <div className="italic">Price does not include tax and service charge 10%</div>
         </div>
