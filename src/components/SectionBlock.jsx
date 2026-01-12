@@ -144,7 +144,7 @@ export default function SectionBlock({ section }) {
 
         {/* Beverage Section Footer - Only when expanded */}
         {section.id === 'beverage' && (
-          <div className="flex items-center justify-between px-8 py-4 bg-[#ED473F] text-white rounded-b-3xl">
+          <div className="flex items-start justify-between px-8 py-4 bg-[#ED473F] text-white rounded-b-3xl">
             <div className="text-sm font-normal italic">Additional</div>
             <div className="flex-1 flex justify-center">
               <img src="/stars.png" alt="Stars and Line" className="h-4" />
@@ -164,12 +164,12 @@ export default function SectionBlock({ section }) {
               <div className="flex-1 h-px bg-[#222222]"></div>
               <img src="/stars-black.png" alt="Stars and Line" className="h-4 ml-3" />
             </div>
-            <div className="flex items-center justify-between mb-1">
+            <div className="flex items-center justify-between mb-0.5">
               <div className="text-sm font-normal">Nasi</div>
               <div className="text-sm font-normal">5</div>
             </div>
-            <div className="text-xs italic text-gray-600 mb-2">Rice</div>
-            <div className="flex items-center justify-between mb-1">
+            <div className="text-xs italic text-gray-600 mb-0.5">Rice</div>
+            <div className="flex items-center justify-between mb-0.5">
               <div className="text-sm font-normal">Telur</div>
               <div className="text-sm font-normal">6</div>
             </div>
@@ -178,7 +178,7 @@ export default function SectionBlock({ section }) {
         )}
 
         {/* Price disclaimer message */}
-        <div className="px-5 pb-2 text-center text-xs mb-3" style={{ color: style.headerText }}>
+        <div className="px-5 pb-2 text-center text-xs mb-3 mt-2" style={{ color: style.headerText }}>
           <div>Harga belum termasuk pajak dan layanan 10%</div>
           <div className="italic">Price does not include tax and service charge 10%</div>
         </div>
