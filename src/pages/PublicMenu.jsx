@@ -16,11 +16,11 @@ export default function PublicMenu() {
     <>
       <div className="flex items-start justify-between text-sm opacity-90 mb-6 px-1">
         <div>
-          <div>Operational Hours</div>
-          <div className="font-semibold">09.00 - 22.00</div>
+          <div>Ramadhan Operational Hours</div>
+          <div className="font-semibold">11.00 - 23.00</div>
         </div>
         <div className="text-right">
-          <div>Orders close at <span className="font-semibold">21.30</span></div>
+          <div>Orders close at <span className="font-semibold">22.30</span></div>
           <div className="text-xs">But the night is still yours!</div>
         </div>
       </div>
